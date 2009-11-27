@@ -5,9 +5,8 @@ using System.Text;
 
 namespace SkatePark
 {
-    public abstract class IBlock
+    public abstract class IBlock : IDrawable
     {
-
         public int PosX
         {
             get;
@@ -22,7 +21,5 @@ namespace SkatePark
         public int Orientation { get; set; }
 
         public abstract void Draw();
-
-
     }
 }
