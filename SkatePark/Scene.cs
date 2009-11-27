@@ -64,6 +64,22 @@ namespace SkatePark
             ClearScene();
             Gl.glPushMatrix();
 
+            // Test values
+            cameraX = 10;
+            cameraY = 500;
+            cameraZ = 500;
+
+            heading = 0;
+            pitch = 0;
+
+            // Camera location.
+            Glu.gluLookAt(cameraX, cameraY, cameraZ, 250, 0, -250, 0, 1, 0);
+            //Gl.glTranslatef(0, 0, -50);
+
+            // Camera orientation.
+            Gl.glRotatef(pitch, 1, 0, 0);
+            Gl.glRotatef(heading, 0, 1, 0);
+            
 
             foreach (IDrawable drawableObject in drawables)
             {

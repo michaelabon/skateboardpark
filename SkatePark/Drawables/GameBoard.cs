@@ -18,13 +18,17 @@ namespace SkatePark.Drawables
 
         public void Draw()
         {
-            Gl.glColor3f(1, 0, 0);
+            
             Gl.glBegin(Gl.GL_QUADS);
             {
-                Gl.glVertex3f(0, 0, 10);
-                Gl.glVertex3f(maxBlockUnits * blockSize, 0, 10);
-                Gl.glVertex3f(maxBlockUnits * blockSize, maxBlockUnits * blockSize, 10);
-                Gl.glVertex3f(0, maxBlockUnits * blockSize, 10);
+                Gl.glColor3f(1, 0, 0);
+                Gl.glVertex3f(0, 0, 0);
+                Gl.glColor3f(0, 1, 0);
+                Gl.glVertex3f(maxBlockUnits * blockSize, 0, 0);
+                Gl.glColor3f(0, 0, 1);
+                Gl.glVertex3f(maxBlockUnits * blockSize, 0 , -maxBlockUnits * blockSize);
+                Gl.glColor3f(1, 0, 1);
+                Gl.glVertex3f(0,0, -maxBlockUnits * blockSize);
             }
             Gl.glEnd();
         }
