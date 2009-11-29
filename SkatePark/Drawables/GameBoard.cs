@@ -18,7 +18,6 @@ namespace SkatePark.Drawables
 
         public void Draw()
         {
-            
             Gl.glBegin(Gl.GL_QUADS);
             {
                 Gl.glColor3f(1, 0, 0);

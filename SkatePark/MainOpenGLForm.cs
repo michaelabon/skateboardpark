@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SkatePark
@@ -17,7 +18,7 @@ namespace SkatePark
             scene = new Scene();
 
             InitializeComponent();
-            this.simpleOpenGlControl1.InitializeContexts();
+            this.openglControl.InitializeContexts();
 
             scene.InitGL();
             scene.SetView(this.Height, this.Width);
@@ -33,6 +34,27 @@ namespace SkatePark
         {
             base.OnResize(e);
             scene.SetView(this.Height, this.Width);
+        }
+
+        private void openglControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            scene.onMouseRelease(e);
+        }
+
+        private void openglControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            scene.onMouseDown(e);
+        }
+
+        private void openglControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            scene.onMouseMove(e);
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            Invalidate();
+            Refresh();
         }
     }
 }

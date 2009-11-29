@@ -28,33 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.simpleOpenGlControl1 = new Tao.Platform.Windows.SimpleOpenGlControl();
+            this.components = new System.ComponentModel.Container();
+            this.openglControl = new Tao.Platform.Windows.SimpleOpenGlControl();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // simpleOpenGlControl1
+            // openglControl
             // 
-            this.simpleOpenGlControl1.AccumBits = ((byte)(0));
-            this.simpleOpenGlControl1.AutoCheckErrors = false;
-            this.simpleOpenGlControl1.AutoFinish = false;
-            this.simpleOpenGlControl1.AutoMakeCurrent = true;
-            this.simpleOpenGlControl1.AutoSwapBuffers = true;
-            this.simpleOpenGlControl1.BackColor = System.Drawing.Color.Black;
-            this.simpleOpenGlControl1.ColorBits = ((byte)(32));
-            this.simpleOpenGlControl1.DepthBits = ((byte)(16));
-            this.simpleOpenGlControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.simpleOpenGlControl1.Location = new System.Drawing.Point(0, 0);
-            this.simpleOpenGlControl1.Name = "simpleOpenGlControl1";
-            this.simpleOpenGlControl1.Size = new System.Drawing.Size(783, 511);
-            this.simpleOpenGlControl1.StencilBits = ((byte)(0));
-            this.simpleOpenGlControl1.TabIndex = 0;
+            this.openglControl.AccumBits = ((byte)(0));
+            this.openglControl.AutoCheckErrors = false;
+            this.openglControl.AutoFinish = false;
+            this.openglControl.AutoMakeCurrent = true;
+            this.openglControl.AutoSwapBuffers = true;
+            this.openglControl.BackColor = System.Drawing.Color.Black;
+            this.openglControl.ColorBits = ((byte)(32));
+            this.openglControl.DepthBits = ((byte)(16));
+            this.openglControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openglControl.Location = new System.Drawing.Point(0, 0);
+            this.openglControl.Name = "openglControl";
+            this.openglControl.Size = new System.Drawing.Size(783, 511);
+            this.openglControl.StencilBits = ((byte)(0));
+            this.openglControl.TabIndex = 0;
+            this.openglControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openglControl_MouseMove);
+            this.openglControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openglControl_MouseDown);
+            this.openglControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openglControl_MouseUp);
             // 
-            // Form1
+            // refreshTimer
+            // 
+            this.refreshTimer.Enabled = true;
+            this.refreshTimer.Interval = 1;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
+            // 
+            // MainOpenGLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 511);
-            this.Controls.Add(this.simpleOpenGlControl1);
-            this.Name = "Form1";
+            this.Controls.Add(this.openglControl);
+            this.Name = "MainOpenGLForm";
             this.Text = "Skate Park Alpha";
             this.ResumeLayout(false);
 
@@ -62,7 +73,8 @@
 
         #endregion
 
-        private Tao.Platform.Windows.SimpleOpenGlControl simpleOpenGlControl1;
+        private Tao.Platform.Windows.SimpleOpenGlControl openglControl;
+        private System.Windows.Forms.Timer refreshTimer;
     }
 }
 
