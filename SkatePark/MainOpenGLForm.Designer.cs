@@ -52,6 +52,7 @@
             this.openglControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openglControl_MouseMove);
             this.openglControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openglControl_MouseDown);
             this.openglControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openglControl_MouseUp);
+            this.openglControl.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.openglControl_MouseWheel);
             // 
             // refreshTimer
             // 

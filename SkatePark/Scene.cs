@@ -9,17 +9,27 @@ using System.Drawing;
 
 namespace SkatePark
 {
-    class Scene
+    public partial class Scene
     {
         List<IDrawable> drawables;
         GameBoard gameBoard;
 
         private int height;
         private int width;
+        private float fovy;
+        private float zFar;
+        private float zNear;
 
         private float cameraX;
         private float cameraY;
         private float cameraZ;
+
+        private float originX, originY, originZ;
+
+        private float upX;
+        private float upY;
+        private float upZ;
+
 
         private float pitch;
         private float heading;
@@ -51,11 +61,23 @@ namespace SkatePark
             cameraX = 50;
             cameraY = 30;
             cameraZ = 500;
+
+            originX = 0;
+            originY = 0;
+            originZ = 0;
+
+            fovy = 45;
+            zNear = 1;
+            zFar = 10000;
+
+            upX = 0;
+            upY = 1;
+            upZ = 0;
         }
 
         internal void InitGL()
         {
-            Gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            Gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glEnable(Gl.GL_CULL_FACE);
@@ -80,7 +102,7 @@ namespace SkatePark
 
             // Establish clipping volume (left, right, bottom,
             // top, near, far)
-            Glu.gluPerspective(45, width / height, 1, 1000);
+            Glu.gluPerspective(fovy, width / height, zNear, zFar);
 
             // reser modelview matrix stack
             Gl.glMatrixMode(Gl.GL_MODELVIEW);
@@ -91,26 +113,22 @@ namespace SkatePark
         {
             ClearScene();
             Gl.glPushMatrix();
-            // Test values
-            
-            // Camera location.
-            //Glu.gluLookAt(cameraX, cameraY, cameraZ, 250, 0, -250, 0, 1, 0);
-            //Gl.glTranslatef(0, 0, -50);
-            
 
-            Gl.glTranslatef(-cameraX, -cameraY, -cameraZ);
-            // Camera orientation.
-            Gl.glRotatef(pitch, 1, 0, 0);
-            Gl.glRotatef(heading, 0.0f, 1.0f + cameraX, 0.0f);
-            
-            
-            
-            
+            Glu.gluLookAt(cameraX, cameraY, cameraZ, originX, originY, originZ, upX, upY, upZ);
 
             foreach (IDrawable drawableObject in drawables)
             {
                 drawableObject.Draw();
             }
+
+            /* Render camera lines */
+
+            Gl.glColor3f(0, 0, 0);
+            Gl.glBegin(Gl.GL_LINES);
+            Gl.glVertex3f(cameraX, cameraY - 5, cameraZ);
+            Gl.glVertex3f(originX, originY, originZ);
+            Gl.glEnd();
+
             Gl.glPopMatrix();
             Gl.glFlush();
 
@@ -130,14 +148,67 @@ namespace SkatePark
         {
             if (PressedMouseButton == MouseButtons.Middle)
             {
-                heading += dCoords.X;
-                pitch += dCoords.Y;
+
+                float dHeading = (float)dCoords.X / 10.0f;
+                heading += dHeading;
+
+                
+                float cos = (float)Math.Cos(dHeading * Math.PI / 180);
+                float sin = (float)Math.Sin(dHeading * Math.PI / 180);
+
+                // Take X,Y to (0,0)
+
+                float x = cameraX - originX;
+                float y = cameraZ - originZ;
+
+                cameraX = x * cos - sin * y;
+                cameraZ = x * sin + cos * y;
+
+                // Take back to whatever
+                cameraX += originX;
+                cameraZ += originZ;
+
+                {
+
+                    // Do some rotation with pitch.
+                    float dPitch = (float)dCoords.Y / 10.0f;
+                    pitch += dPitch;
+
+                    float cosP = (float)Math.Cos(dPitch * Math.PI / 180);
+                    float sinP = (float)Math.Sin(dPitch * Math.PI / 180);
+
+                    // Translate origin
+                    float xP = originY - cameraY;
+                    float yP = originZ - cameraZ;
+
+                    originY = xP * cosP - sinP * yP;
+                    originZ = xP * sinP + cosP * yP;
+
+                    //// Translate back
+                    originY += cameraY;
+                    originZ += cameraZ;
+
+                }
+                
             }
             else if (PressedMouseButton == MouseButtons.Left)
             {
-                cameraX += dCoords.X;
-                cameraZ += dCoords.Y;
+                // Rotate the movement vector by the heading
+                float cos = (float)Math.Cos(heading * Math.PI / 180);
+                float sin = (float)Math.Sin(heading * Math.PI / 180);
+                float x, y;
+
+                x = dCoords.X * cos - sin * dCoords.Y;
+                y = dCoords.X * sin + cos * dCoords.Y;
+
+
+                cameraX += x;
+                cameraZ += y;
+
+                originX += x;
+                originZ += y;
             }
+            
         }
 
         public void onMouseDown(MouseEventArgs e)
@@ -150,6 +221,8 @@ namespace SkatePark
 
             CameraMoveMode = true;
             PressedMouseButton = e.Button;
+            
+
         }
 
         public void onMouseRelease(MouseEventArgs e)
@@ -157,6 +230,8 @@ namespace SkatePark
             // User doesn't have mouse down anymore.
             MouseIsUp = true;
             CameraMoveMode = false;
+
+
         }
 
         public void onMouseMove(MouseEventArgs e)
@@ -177,6 +252,7 @@ namespace SkatePark
                 FirstMouseCoords = e.Location;
 
                 UpdateCameraLocationFromDrag(dCoords);
+
 
             }
         }

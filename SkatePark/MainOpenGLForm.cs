@@ -51,10 +51,16 @@ namespace SkatePark
             scene.onMouseMove(e);
         }
 
+        private void openglControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            scene.onMouseWheel(e);
+        }
+
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             Invalidate();
             Refresh();
         }
+
     }
 }
