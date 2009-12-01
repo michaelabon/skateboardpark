@@ -117,6 +117,28 @@ namespace SkatePark
             {
                 drawableObject.Draw();
             }
+            /*
+            float count = 0;
+            Gl.glBegin(Gl.GL_QUADS);
+            for (int i = 0; i < gameBoard.NumBlocks * gameBoard.BlockPixelSize; i += gameBoard.BlockPixelSize)
+            {
+                for (int j = 0; j < gameBoard.NumBlocks * gameBoard.BlockPixelSize; j += gameBoard.BlockPixelSize)
+                {
+
+                    Gl.glColor4f(count, 1 - count, 1, 0.1f);
+
+                    Gl.glVertex3f(j, 10, -i);
+                    Gl.glVertex3f(j + gameBoard.BlockPixelSize, 10, -i);
+                    Gl.glVertex3f(j + gameBoard.BlockPixelSize, 10, -i - gameBoard.BlockPixelSize);
+                    Gl.glVertex3f(j, 10, -i - gameBoard.BlockPixelSize);
+
+                    
+                    //Gl.glPopName();
+                    count += 0.01f;
+                }
+                //break;
+            }
+            Gl.glEnd();*/
 
             /* Render camera lines */
 
@@ -167,6 +189,77 @@ namespace SkatePark
             
         }
 
+        private void IntersectMouseClick()
+        {
+
+            // Draw all fake grids.
+            // Each grid is maxBlockUnits*maxBlockUnit
+
+            uint[] buffer = new uint[512];
+            int[] viewport = new int[4];
+
+            Gl.glSelectBuffer(512, buffer);
+            Gl.glRenderMode(Gl.GL_SELECT);
+
+            Gl.glMatrixMode(Gl.GL_PROJECTION);
+            Gl.glPushMatrix();
+            Gl.glLoadIdentity();
+            Gl.glGetIntegerv(Gl.GL_VIEWPORT, viewport);
+            Glu.gluPickMatrix(FirstMouseCoords.X, viewport[3] - (height - FirstMouseCoords.Y), 5, 5, viewport);
+            Glu.gluPerspective(fovy, width / height, zNear, zFar);
+
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+            Gl.glInitNames();
+
+            float theta = (float)((90 - pitch) * Math.PI / 180);
+            float azimuth = (float)(heading * Math.PI / 180);
+
+            float cameraZ = -(float)(r * Math.Sin(theta) * Math.Cos(azimuth));
+            float cameraX = (float)(r * Math.Sin(theta) * Math.Sin(azimuth));
+            float cameraY = (float)(r * Math.Cos(theta));
+
+            Glu.gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
+
+            Gl.glTranslatef(translateX, 0, translateY);
+
+            int count = 0;
+            for (int i = 0; i < gameBoard.NumBlocks * gameBoard.BlockPixelSize; i += gameBoard.BlockPixelSize)
+            {
+                for (int j = 0; j < gameBoard.NumBlocks * gameBoard.BlockPixelSize; j += gameBoard.BlockPixelSize)
+                {
+                    Gl.glPushName(count);
+
+                    Gl.glBegin(Gl.GL_QUADS);
+
+                    Gl.glVertex3f(j, 2, -i);
+                    Gl.glVertex3f(j + gameBoard.BlockPixelSize, 2, -i);
+                    Gl.glVertex3f(j + gameBoard.BlockPixelSize, 2, -i - gameBoard.BlockPixelSize);
+                    Gl.glVertex3f(j, 2, -i - gameBoard.BlockPixelSize);
+
+                    Gl.glEnd();
+                    Gl.glPopName();
+                    count++;
+                }
+            }
+
+
+            int hits =0;
+            // restore
+            Gl.glMatrixMode(Gl.GL_PROJECTION);
+            Gl.glPopMatrix();
+            
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+            Gl.glFlush();
+
+            hits = Gl.glRenderMode(Gl.GL_RENDER);
+            Console.WriteLine("Hits: " + hits);
+            if (hits != 0)
+            {
+                
+            }
+
+        }
+
         public void onMouseDown(MouseEventArgs e)
         {
             // User has mouse on.
@@ -174,11 +267,11 @@ namespace SkatePark
 
             // Save the first coordinates.
             FirstMouseCoords = e.Location;
+            PressedMouseButton = e.Button;
+            IntersectMouseClick();
 
             CameraMoveMode = true;
-            PressedMouseButton = e.Button;
             
-
         }
 
         public void onMouseRelease(MouseEventArgs e)
