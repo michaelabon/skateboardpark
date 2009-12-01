@@ -20,15 +20,10 @@ namespace SkatePark
         private float zFar;
         private float zNear;
 
-        private float cameraX;
-        private float cameraY;
-        private float cameraZ;
+        private float translateX;
+        private float translateY;
 
-        private float originX, originY, originZ;
-
-        private float upX;
-        private float upY;
-        private float upZ;
+        float r;
 
 
         private float pitch;
@@ -56,23 +51,16 @@ namespace SkatePark
             CameraMoveMode = false;
 
             heading = 0;
-            pitch = 0;
-
-            cameraX = 50;
-            cameraY = 30;
-            cameraZ = 500;
-
-            originX = 0;
-            originY = 0;
-            originZ = 0;
+            pitch = 30;
 
             fovy = 45;
             zNear = 1;
             zFar = 10000;
 
-            upX = 0;
-            upY = 1;
-            upZ = 0;
+            r = 500;
+
+            translateX = 0;
+            translateY = 0;
         }
 
         internal void InitGL()
@@ -114,7 +102,16 @@ namespace SkatePark
             ClearScene();
             Gl.glPushMatrix();
 
-            Glu.gluLookAt(cameraX, cameraY, cameraZ, originX, originY, originZ, upX, upY, upZ);
+            float theta = (float)((90 - pitch) * Math.PI / 180);
+            float azimuth = (float)(heading * Math.PI / 180);
+
+            float cameraZ = -(float)(r * Math.Sin(theta) * Math.Cos(azimuth));
+            float cameraX = (float)(r * Math.Sin(theta) * Math.Sin(azimuth));
+            float cameraY = (float)(r * Math.Cos(theta));
+
+            Glu.gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
+
+            Gl.glTranslatef(translateX, 0, translateY);
 
             foreach (IDrawable drawableObject in drawables)
             {
@@ -126,7 +123,7 @@ namespace SkatePark
             Gl.glColor3f(0, 0, 0);
             Gl.glBegin(Gl.GL_LINES);
             Gl.glVertex3f(cameraX, cameraY - 5, cameraZ);
-            Gl.glVertex3f(originX, originY, originZ);
+            Gl.glVertex3f(0, 0, 0);
             Gl.glEnd();
 
             Gl.glPopMatrix();
@@ -146,67 +143,26 @@ namespace SkatePark
 
         private void UpdateCameraLocationFromDrag(Point dCoords)
         {
+            Console.WriteLine("H: " + heading + " P: " + pitch);
             if (PressedMouseButton == MouseButtons.Middle)
             {
 
                 float dHeading = (float)dCoords.X / 10.0f;
                 heading += dHeading;
-
-                
-                float cos = (float)Math.Cos(dHeading * Math.PI / 180);
-                float sin = (float)Math.Sin(dHeading * Math.PI / 180);
-
-                // Take X,Y to (0,0)
-
-                float x = cameraX - originX;
-                float y = cameraZ - originZ;
-
-                cameraX = x * cos - sin * y;
-                cameraZ = x * sin + cos * y;
-
-                // Take back to whatever
-                cameraX += originX;
-                cameraZ += originZ;
-
-                {
-
-                    // Do some rotation with pitch.
-                    float dPitch = (float)dCoords.Y / 10.0f;
-                    pitch += dPitch;
-
-                    float cosP = (float)Math.Cos(dPitch * Math.PI / 180);
-                    float sinP = (float)Math.Sin(dPitch * Math.PI / 180);
-
-                    // Translate origin
-                    float xP = originY - cameraY;
-                    float yP = originZ - cameraZ;
-
-                    originY = xP * cosP - sinP * yP;
-                    originZ = xP * sinP + cosP * yP;
-
-                    //// Translate back
-                    originY += cameraY;
-                    originZ += cameraZ;
-
-                }
+                float dPitch = (float)dCoords.Y / 10.0f;
+                pitch -= dPitch;
                 
             }
             else if (PressedMouseButton == MouseButtons.Left)
             {
-                // Rotate the movement vector by the heading
+                // Movement is (0,0) -> (X,Y)
+                // (X,Y) needs to be rotated by heading.
                 float cos = (float)Math.Cos(heading * Math.PI / 180);
                 float sin = (float)Math.Sin(heading * Math.PI / 180);
-                float x, y;
-
-                x = dCoords.X * cos - sin * dCoords.Y;
-                y = dCoords.X * sin + cos * dCoords.Y;
-
-
-                cameraX += x;
-                cameraZ += y;
-
-                originX += x;
-                originZ += y;
+                float x = dCoords.X * cos - sin * dCoords.Y;
+                float y = dCoords.X * sin + cos * dCoords.Y;
+                translateX += x;
+                translateY += y;
             }
             
         }

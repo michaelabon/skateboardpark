@@ -39,31 +39,10 @@ namespace SkatePark
 
         public void onMouseWheel(MouseEventArgs e)
         {
-            // Find the camera-origin direction vector.
-            float dirX = cameraX - originX;
-            float dirY = cameraY - originY;
-            float dirZ = cameraZ - originZ;
-
-            // Normalize it
-            float mag = (float)Math.Sqrt(Math.Pow(dirX, 2) + Math.Pow(dirY, 2) + Math.Pow(dirZ, 2));
-            dirX /= mag;
-            dirY /= mag;
-            dirZ /= mag;
-
-            // Find the current parameter
-            float s = (cameraX - originX) / dirX;
             
-            s += (e.Delta > 0 ? -20 : 20);
+            r += (e.Delta > 0 ? -20 : 20);
 
-            // Get the new vector.
 
-            float newX = originX + s * dirX;
-            float newY = originY + s * dirY;
-            float newZ = originZ + s * dirZ;
-
-            cameraX = newX;
-            cameraY = newY;
-            cameraZ = newZ;
         }
 
     }
