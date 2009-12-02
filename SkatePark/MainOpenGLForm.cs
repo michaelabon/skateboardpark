@@ -27,7 +27,7 @@ namespace SkatePark
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            scene.RenderScene();
+            if(!scene.StopRender) scene.RenderScene();
         }
 
         protected override void OnResize(EventArgs e)

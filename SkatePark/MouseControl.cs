@@ -3,39 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace SkatePark
 {
     public partial class Scene
     {
+        /// <summary>
+        /// Used to know if the user has the mouse down or not.
+        /// </summary>
+        private bool MouseIsUp { get; set; }
+        private Point FirstMouseCoords { get; set; }
+        /// <summary>
+        /// Determines what to do when user drags mouse.
+        /// </summary>
+        private bool CameraMoveMode { get; set; }
+        private MouseButtons PressedMouseButton { get; set; }
 
-        public float[][] getPixelSpaceToWorldSpaceMatrix()
-        {
-            /*
-             * (1/a | 0 | 0 | 0
-                0 | 1/b | 0 | 0
-                0 | 0 | 0 | -1
-                0 | 0 | 1/d | c/d)
-             */
-
-            float f = 1 / (float)Math.Tan(fovy/2);
-            float aspect = width/height;
-            
-            float a = f / aspect;
-
-            float b = f;
-            float c = (zFar + zNear) / (zNear-zFar);
-            float d = (2 * zFar * zNear) / (zNear - zFar);
-
-            //float[][] ret = { { 1 / a, 0, 0, 0 }, { 0, 1 / b, 0, 0 }, { 0, 0, 0, -1 }, { 0, 0, 1 / d, c / d } };
-
-            return null;
-        }
-
-        public float[] getWorldSpaceCoords(float x, float y)
-        {
-            return null;
-        }
 
         public void onMouseWheel(MouseEventArgs e)
         {
@@ -43,6 +27,59 @@ namespace SkatePark
             r += (e.Delta > 0 ? -20 : 20);
 
 
+        }
+
+        public void onMouseDown(MouseEventArgs e)
+        {
+            // User has mouse on.
+            MouseIsUp = false;
+
+            // Save the first coordinates.
+            FirstMouseCoords = e.Location;
+            PressedMouseButton = e.Button;
+
+            if (IntersectMouseClick())
+            {
+                // User clicked on a block
+                CameraMoveMode = false;
+            }
+            else
+            {
+                CameraMoveMode = true;
+            }
+
+        }
+
+        public void onMouseRelease(MouseEventArgs e)
+        {
+            // User doesn't have mouse down anymore.
+            MouseIsUp = true;
+            CameraMoveMode = false;
+
+
+        }
+
+        public void onMouseMove(MouseEventArgs e)
+        {
+            /**
+             * Note: This is a camera movement. NOT an object movement.
+             */
+            // Did the user have the mouse down?
+            if (!MouseIsUp && CameraMoveMode)
+            {
+                // We have a drag!
+                Point newCoords = e.Location;
+
+                // Compute how much the mouse moved.
+                Point dCoords = new Point(FirstMouseCoords.X - e.X, FirstMouseCoords.Y - e.Y);
+
+                // Since this is camera, we're not interested about net movement (ie from mouse down)
+                FirstMouseCoords = e.Location;
+
+                UpdateCameraLocationFromDrag(dCoords);
+
+
+            }
         }
 
     }

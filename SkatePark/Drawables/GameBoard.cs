@@ -31,5 +31,48 @@ namespace SkatePark.Drawables
             }
             Gl.glEnd();
         }
+
+        /// <summary>
+        /// Draws the grids of the game board.
+        /// For now, we colour each grid by its own random color.
+        /// </summary>
+        /// <param name="isSelectionMode">Specifies whether or not we're drawing in selection mode</param>
+        public void DrawGrids(bool isSelectionMode)
+        {
+            int count = 0;
+            if (!isSelectionMode)
+            {
+                Gl.glPolygonMode(Gl.GL_FRONT, Gl.GL_LINE);
+                Gl.glPolygonMode(Gl.GL_BACK, Gl.GL_LINE);
+            }
+
+            for (int i = 0; i < NumBlocks * BlockPixelSize; i += BlockPixelSize)
+            {
+                for (int j = 0; j < NumBlocks * BlockPixelSize; j += BlockPixelSize)
+                {
+                    if( isSelectionMode )
+                        Gl.glPushName(count);
+
+                    Gl.glBegin(Gl.GL_QUADS);
+
+                    Gl.glVertex3f(j, 2, -i);
+                    Gl.glVertex3f(j + BlockPixelSize, 2, -i);
+                    Gl.glVertex3f(j + BlockPixelSize, 2, -i - BlockPixelSize);
+                    Gl.glVertex3f(j, 2, -i - BlockPixelSize);
+
+                    Gl.glEnd();
+
+                    if( isSelectionMode )
+                        Gl.glPopName();
+                    count++;
+                }
+            }
+
+            if (!isSelectionMode)
+            {
+                Gl.glPolygonMode(Gl.GL_FRONT, Gl.GL_FILL);
+                Gl.glPolygonMode(Gl.GL_BACK, Gl.GL_FILL);
+            }
+        }
     }
 }
