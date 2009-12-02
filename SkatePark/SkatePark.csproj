@@ -12,6 +12,8 @@
     <AssemblyName>SkatePark</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,7 +80,11 @@
     <Compile Include="MainOpenGLForm.Designer.cs">
       <DependentUpon>MainOpenGLForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MouseControl.cs" />
+    <Comple Include="MouseControl.cs" />
+    <Compile Include="ModelImporter.cs" />
+    <Compile Include="Primitives\Material.cs" />
+    <Compile Include="Primitives\Triangle.cs" />
+    <Compile Include="Primitives\Vector3f.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainOpenGLForm.resx">
@@ -98,16 +104,44 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Raw Models\DAE to OBJ\Cube\cube.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Raw Models\DAE to OBJ\Cube\cube.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Raw Models\DAE to OBJ\QuarterPipe\QuarterPipe.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Raw Models\DAE to OBJ\QuarterPipe\QuarterPipe.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Raw Models\DAE to OBJ\Rails\rails.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Raw Models\DAE to OBJ\Rails\rails.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Primitives\Vector2f.cs" />
     <Compile Include="Scene.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Dependencies\Tao.OpenGl.dll" />
     <Content Include="Dependencies\Tao.Platform.Windows.dll" />
+    <Content Include="Raw Models\DAE to OBJ\Cube\texture0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Raw Models\DAE to OBJ\QuarterPipe\texture0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Raw Models\DAE to OBJ\Rails\texture0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
