@@ -1,4 +1,5 @@
-﻿namespace SkatePark
+﻿using System;
+namespace SkatePark
 {
     public partial class Scene
     {
