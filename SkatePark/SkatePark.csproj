@@ -80,8 +80,8 @@
     <Compile Include="MainOpenGLForm.Designer.cs">
       <DependentUpon>MainOpenGLForm.cs</DependentUpon>
     </Compile>
-    <Comple Include="MouseControl.cs" />
     <Compile Include="ModelImporter.cs" />
+    <Compile Include="MouseControl.cs" />
     <Compile Include="Primitives\Material.cs" />
     <Compile Include="Primitives\Triangle.cs" />
     <Compile Include="Primitives\Vector3f.cs" />
