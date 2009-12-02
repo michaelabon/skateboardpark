@@ -5,21 +5,28 @@ using System.Text;
 
 namespace SkatePark.Primitives
 {
-    struct Material
+    public class Material
     {
-        public Material(String id, String fileName)
+        public Material()
+        {
+            GL_ID = 0;
+        }
+
+        public Material(String id, String fileName, uint GL_ID)
         {
             this.id = id;
             this.fileName = fileName;
+            this.GL_ID = GL_ID;
             ambient = new Vector3f();
             diffuse = new Vector3f();
             specular = new Vector3f();
         }
 
-        public Material(String id, String fileName, Vector3f ambient, Vector3f diffuse, Vector3f specular)
+        public Material(String id, String fileName, uint GL_ID, Vector3f ambient, Vector3f diffuse, Vector3f specular)
         {
             this.id = id;
             this.fileName = fileName;
+            this.GL_ID = GL_ID;
             this.ambient = ambient;
             this.diffuse = diffuse;
             this.specular = specular;
@@ -41,6 +48,8 @@ namespace SkatePark.Primitives
         /// An absolute path to the texture's image.
         /// </summary>
         public string fileName;
+
+        public uint GL_ID;
 
         /// <summary>
         /// The amount of light on this model. May or may not be relevant.

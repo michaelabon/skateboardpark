@@ -147,7 +147,7 @@ namespace SkatePark
             if (PressedMouseButton == MouseButtons.Middle)
             {
 
-                float dHeading = (float)dCoords.X / 10.0f;
+                float dHeading = -(float)dCoords.X / 10.0f;
                 heading += dHeading;
                 float dPitch = (float)dCoords.Y / 10.0f;
                 pitch -= dPitch;

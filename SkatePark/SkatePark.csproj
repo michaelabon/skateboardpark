@@ -71,8 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockControl.cs" />
+    <Compile Include="Drawables\Cube.cs" />
+    <Compile Include="Drawables\CubletWarehouse.cs" />
     <Compile Include="Drawables\GameBoard.cs" />
-    <Compile Include="IBlock.cs" />
+    <Compile Include="Drawables\ICubelet.cs" />
     <Compile Include="Drawables\IDrawable.cs" />
     <Compile Include="MainOpenGLForm.cs">
       <SubType>Form</SubType>

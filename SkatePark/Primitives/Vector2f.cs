@@ -8,7 +8,7 @@ namespace SkatePark.Primitives
     /// <summary>
     /// Represents 2 floats
     /// </summary>
-    class Vector2f
+    public class Vector2f
     {
         /// <summary>
         /// Defaults both component magnitudes to zero.
@@ -41,8 +41,8 @@ namespace SkatePark.Primitives
             this.Y = Convert.ToSingle(y);
         }
 
-        float X { get; set; }
-        float Y { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
 
         public float this[int pos]
         {

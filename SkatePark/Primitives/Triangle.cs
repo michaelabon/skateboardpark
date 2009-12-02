@@ -10,7 +10,7 @@ namespace SkatePark.Primitives
     /// <summary>
     /// Represents a triangle. Contains three vertices, texel coordinates, texel Material, and normal vectors (not necessarily normalized)
     /// </summary>
-    class Triangle
+    public class Triangle
     {
         int vertex1, vertex2, vertex3;
         int texel1, texel2, texel3;

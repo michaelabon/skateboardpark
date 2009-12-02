@@ -8,7 +8,7 @@ namespace SkatePark.Primitives
     /// <summary>
     /// Represents 3 floats.
     /// </summary>
-    class Vector3f
+    public class Vector3f
     {
         /// <summary>
         /// Defaults all three component magnitudes to zero.

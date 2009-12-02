@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using SkatePark.Drawables;
 
 namespace SkatePark
 {
@@ -15,6 +16,8 @@ namespace SkatePark
         Scene scene;
         public MainOpenGLForm()
         {
+            CubletWarehouse.LoadAllData();
+
             scene = new Scene();
 
             InitializeComponent();

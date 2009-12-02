@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using SkatePark.Primitives;
+using System.Drawing;
+using Tao.OpenGl;
 
 namespace SkatePark
 {
@@ -69,7 +71,38 @@ namespace SkatePark
                 }
             }
             materialDict.Add(currentMaterial.id, currentMaterial);
+            LoadGLTextures(filename, materialDict);
             return materialDict;
+        }
+
+        private void LoadGLTextures (string fileName, Dictionary<string, Material> materialDict)
+        {
+            foreach (KeyValuePair<string, Material> entry in materialDict)
+            {
+                Bitmap image = null;
+                string file = entry.Value.fileName;
+                image = new Bitmap(file);
+
+                if (image == null) { continue; }
+
+                System.Drawing.Imaging.BitmapData bitmapData;
+                Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
+
+                bitmapData = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                
+                uint[] textureNames = new uint[1];
+                Gl.glGenTextures(1, textureNames);
+                entry.Value.GL_ID = textureNames[0];
+
+                Gl.glBindTexture(Gl.GL_TEXTURE_2D, textureNames[0]);
+                Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR);
+                Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR);
+                Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, (int)Gl.GL_RGB, image.Width, image.Height, 0, Gl.GL_BGR_EXT, Gl.GL_UNSIGNED_BYTE, bitmapData.Scan0);
+
+                image.UnlockBits(bitmapData);
+                image.Dispose();
+            }
+
         }
 
         /// <summary>
