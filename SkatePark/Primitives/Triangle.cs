@@ -87,9 +87,9 @@ namespace SkatePark.Primitives
         /// <param name="vertexVector3">The vertex vector of the third coordinate.</param> 
         public void getVertices(List<Vector3f> vertexArray, out Vector3f vertexVector1, out Vector3f vertexVector2, out Vector3f vertexVector3)
         {
-            vertexVector1 = vertexArray[vertex1];
-            vertexVector2 = vertexArray[vertex2];
-            vertexVector3 = vertexArray[vertex3];
+            vertexVector1 = vertexArray[vertex1 - 1];
+            vertexVector2 = vertexArray[vertex2 - 1];
+            vertexVector3 = vertexArray[vertex3 - 1];
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace SkatePark.Primitives
         /// <param name="normalVector3">The normal vector of the third coordinate.</param> 
         public void getNormals(List<Vector3f> normalArray, out Vector3f normalVector1, out Vector3f normalVector2, out Vector3f normalVector3)
         {
-            normalVector1 = normalArray[normal1];
-            normalVector2 = normalArray[normal2];
-            normalVector3 = normalArray[normal3];
+            normalVector1 = normalArray[normal1-1];
+            normalVector2 = normalArray[normal2-1];
+            normalVector3 = normalArray[normal3-1];
         }
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace SkatePark.Primitives
         /// <param name="texelVector3">The texel vector of the third coordinate.</param> 
         public void getTexels(List<Vector2f> texelArray, out Vector2f texelVector1, out Vector2f texelVector2, out Vector2f texelVector3)
         {
-            texelVector1 = texelArray[texel1];
-            texelVector2 = texelArray[texel2];
-            texelVector3 = texelArray[texel3];
+            texelVector1 = texelArray[texel1-1];
+            texelVector2 = texelArray[texel2-1];
+            texelVector3 = texelArray[texel3-1];
         }
     }
 }

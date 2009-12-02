@@ -11,7 +11,7 @@ namespace SkatePark
 {
     public partial class Scene
     {
-        List<IDrawable> drawables;
+        List<ICubelet> drawables;
         GameBoard gameBoard;
 
         private int height;
@@ -32,7 +32,7 @@ namespace SkatePark
 
         public Scene()
         {
-            drawables = new List<IDrawable>();
+            drawables = new List<ICubelet>();
             gameBoard = new GameBoard(50, 10);
             drawables.Add(gameBoard);
 
@@ -51,6 +51,12 @@ namespace SkatePark
             translateX = 0;
             translateY = 0;
             StopRender = false;
+
+            Cube testCube = new Cube();
+            testCube.PosX = 5;
+            testCube.PosY = 0;
+
+            drawables.Add(testCube);
         }
 
         internal void InitGL()
@@ -58,7 +64,10 @@ namespace SkatePark
             Gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_DEPTH_TEST);
+            Gl.glEnable(Gl.GL_LEQUAL);
             Gl.glEnable(Gl.GL_CULL_FACE);
+            Gl.glEnable(Gl.GL_TEXTURE_2D);
+            Gl.glHint(Gl.GL_PERSPECTIVE_CORRECTION_HINT, Gl.GL_NICEST);
         }
 
         internal void SetView(int height, int width)
@@ -109,10 +118,13 @@ namespace SkatePark
 
             CalculateModelView();
 
-            foreach (IDrawable drawableObject in drawables)
+            foreach (ICubelet drawableObject in drawables)
             {
-                
+                Gl.glPushMatrix();
+                Gl.glTranslatef(drawableObject.PosX * gameBoard.BlockPixelSize, 0, -drawableObject.PosY * gameBoard.BlockPixelSize);
+
                 drawableObject.Draw();
+                Gl.glPopMatrix();
             }
             
             // Render grids for debug
@@ -134,6 +146,8 @@ namespace SkatePark
             {
                 Console.WriteLine("An error has occurred: " + error.ToString());
             }
+
+           // StopRender = true;
         }
 
         private void ClearScene()

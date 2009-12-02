@@ -16,13 +16,12 @@ namespace SkatePark
         Scene scene;
         public MainOpenGLForm()
         {
-            CubletWarehouse.LoadAllData();
-
             scene = new Scene();
-
             InitializeComponent();
             this.openglControl.InitializeContexts();
+            CubletWarehouse.LoadAllData();
 
+            
             scene.InitGL();
             scene.SetView(this.Height, this.Width);
         }

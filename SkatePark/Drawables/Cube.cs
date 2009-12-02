@@ -5,11 +5,11 @@ using System.Text;
 
 namespace SkatePark.Drawables
 {
-    class Cube 
+    class Cube : ICubelet
     {
-        public void Draw()
+        public Cube()
         {
-
+            myType = "cube";
         }
     }
 }

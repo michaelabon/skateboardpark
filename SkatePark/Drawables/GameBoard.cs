@@ -3,7 +3,7 @@ using Tao.OpenGl;
 
 namespace SkatePark.Drawables
 {
-    public class GameBoard : IDrawable
+    public class GameBoard : ICubelet
     {
         public int BlockPixelSize { get; private set; }
         public int NumBlocks { get; private set; }
@@ -16,7 +16,7 @@ namespace SkatePark.Drawables
 
         public bool ShowGrid { get; set; }
 
-        public void Draw()
+        public override void Draw()
         {
             Gl.glBegin(Gl.GL_QUADS);
             {
