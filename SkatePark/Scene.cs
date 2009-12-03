@@ -170,25 +170,37 @@ namespace SkatePark
             //Console.WriteLine("H: " + heading + " P: " + pitch);
             if (PressedMouseButton == MouseButtons.Middle)
             {
+                if (Control.ModifierKeys == Keys.Shift)
+                {
+                    dCoords = PanCamera(dCoords);
+                }
+                else
+                {
+                    dCoords = RotateCamera(dCoords);
+                }
+            }
+        }
 
-                float dHeading = -(float)dCoords.X / 10.0f;
-                heading += dHeading;
-                float dPitch = (float)dCoords.Y / 10.0f;
-                pitch -= dPitch;
-                
-            }
-            else if (PressedMouseButton == MouseButtons.Left)
-            {
-                // Movement is (0,0) -> (X,Y)
-                // (X,Y) needs to be rotated by heading.
-                float cos = (float)Math.Cos(heading * Math.PI / 180);
-                float sin = (float)Math.Sin(heading * Math.PI / 180);
-                float x = dCoords.X * cos - sin * dCoords.Y;
-                float y = dCoords.X * sin + cos * dCoords.Y;
-                translateX += x;
-                translateY += y;
-            }
-            
+        private Point PanCamera(Point dCoords)
+        {
+            // Movement is (0,0) -> (X,Y)
+            // (X,Y) needs to be rotated by heading.
+            float cos = (float)Math.Cos(heading * Math.PI / 180);
+            float sin = (float)Math.Sin(heading * Math.PI / 180);
+            float x = dCoords.X * cos - sin * dCoords.Y;
+            float y = dCoords.X * sin + cos * dCoords.Y;
+            translateX += x;
+            translateY += y;
+            return dCoords;
+        }
+
+        private Point RotateCamera(Point dCoords)
+        {
+            float dHeading = -(float)dCoords.X / 10.0f;
+            heading += dHeading;
+            float dPitch = (float)dCoords.Y / 10.0f;
+            pitch -= dPitch;
+            return dCoords;
         }
 
         /// <summary>

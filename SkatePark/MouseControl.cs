@@ -33,6 +33,12 @@ namespace SkatePark
             FirstMouseCoords = e.Location;
             PressedMouseButton = e.Button;
 
+            if (e.Button == MouseButtons.Middle)
+            {
+                CameraMoveMode = true;
+                return;
+            }
+
             if (IntersectMouseClick())
             {
                 // User clicked on a block

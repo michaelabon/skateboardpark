@@ -130,7 +130,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Primitives\Vector2f.cs" />
-    <Compile Include="Scene.cs" />
+    <Compile Include="Scene.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Dependencies\Tao.OpenGl.dll" />
