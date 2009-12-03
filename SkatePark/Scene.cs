@@ -25,6 +25,9 @@ namespace SkatePark
         private float translateY;
         public bool StopRender { get; set; }
 
+        private float[] LightAmbient = { 0.5f, 0.5f, 0.5f, 1 };
+        private float[] LightDiffuse = { 1, 1, 1, 1 };
+
         float r;
 
         private float pitch;
@@ -62,12 +65,19 @@ namespace SkatePark
         internal void InitGL()
         {
             Gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+            Gl.glClearDepth(1.0f);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glEnable(Gl.GL_LEQUAL);
             Gl.glEnable(Gl.GL_CULL_FACE);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
+            
             Gl.glHint(Gl.GL_PERSPECTIVE_CORRECTION_HINT, Gl.GL_NICEST);
+
+            Gl.glEnable(Gl.GL_LIGHTING);
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_AMBIENT, this.LightAmbient);
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_DIFFUSE, this.LightDiffuse);
+            Gl.glEnable(Gl.GL_LIGHT1);
         }
 
         internal void SetView(int height, int width)
