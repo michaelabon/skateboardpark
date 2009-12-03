@@ -12,9 +12,14 @@ namespace SkatePark.Primitives
     /// </summary>
     public class Triangle
     {
-        int vertex1, vertex2, vertex3;
-        int texel1, texel2, texel3;
-        int normal1, normal2, normal3;
+        private int vertex1, vertex2, vertex3;
+        private int texel1, texel2, texel3;
+        private int normal1, normal2, normal3;
+
+        /// <summary>
+        /// The Material that will be the texture for this face
+        /// </summary>
+        public Material material { get; set; }
 
         /// <summary>
         /// Creates a Triangle as specified. Vertices must be CCW
@@ -74,12 +79,8 @@ namespace SkatePark.Primitives
         }
 
         /// <summary>
-        /// The Material that will be the texture for this face
-        /// </summary>
-        public Material material { get; set; }
-
-        /// <summary>
         /// Get the vertex vectors for this Triangle
+        /// Note that the indices are read from and stored as 1-based indices but that OpenGL needs them as 0-based indices. This corrects that.
         /// </summary>
         /// <param name="vertexArray">The vertex array that holds coordinates for this Triangle</param> 
         /// <param name="vertexVector1">The vertex vector of the first coordinate.</param> 
@@ -93,7 +94,8 @@ namespace SkatePark.Primitives
         }
 
         /// <summary>
-        /// Get the normal vectors for this Triangle
+        /// Get the normal vectors for this Triangle.
+        /// Note that the indices are read from and stored as 1-based indices but that OpenGL needs them as 0-based indices. This corrects that.
         /// </summary>
         /// <param name="normalArray">The normal array that holds coordinates for this Triangle</param> 
         /// <param name="normalVector1">The normal vector of the first coordinate.</param> 
@@ -108,6 +110,7 @@ namespace SkatePark.Primitives
 
         /// <summary>
         /// Get the texel vectors for this Triangle
+        /// Note that the indices are read from and stored as 1-based indices but that OpenGL needs them as 0-based indices. This corrects that.
         /// </summary>
         /// <param name="texelArray">The texel array that holds coordinates for this Triangle</param> 
         /// <param name="texelVector1">The texel vector of the first coordinate.</param> 
