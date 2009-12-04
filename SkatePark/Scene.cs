@@ -27,6 +27,7 @@ namespace SkatePark
 
         private float[] LightAmbient = { 0.5f, 0.5f, 0.5f, 1 };
         private float[] LightDiffuse = { 1, 1, 1, 1 };
+        private float[] LightPosition = { 30, 30, 30, 1 };
 
         float r;
 
@@ -70,12 +71,15 @@ namespace SkatePark
             Gl.glEnable(Gl.GL_LEQUAL);
             Gl.glEnable(Gl.GL_CULL_FACE);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
-            
+            Gl.glTexEnvf(Gl.GL_TEXTURE_ENV, Gl.GL_TEXTURE_ENV_MODE, Gl.GL_DECAL);
+
             Gl.glHint(Gl.GL_PERSPECTIVE_CORRECTION_HINT, Gl.GL_NICEST);
+            Gl.glHint(Gl.GL_LINE_SMOOTH_HINT, Gl.GL_NICEST);					// Set Line Antialiasing
 
             Gl.glEnable(Gl.GL_LIGHTING);
             Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_AMBIENT, this.LightAmbient);
             Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_DIFFUSE, this.LightDiffuse);
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_POSITION, this.LightPosition);
             Gl.glEnable(Gl.GL_LIGHT1);
         }
 

@@ -142,6 +142,9 @@
     <Content Include="Raw Models\DAE to OBJ\QuarterPipe\texture0.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Raw Models\DAE to OBJ\QuarterPipe\texture1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Raw Models\DAE to OBJ\Rails\texture0.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

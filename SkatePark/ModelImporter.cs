@@ -60,7 +60,7 @@ namespace SkatePark
                         case "#":
                             continue;
                         case "newmtl":
-                            if (currentMaterial.id != null)
+                            if ((currentMaterial.id != null) && (currentMaterial.fileName != null))
                             {
                                 materialDict.Add(currentMaterial.id, currentMaterial);
                             }
@@ -158,6 +158,7 @@ namespace SkatePark
             Dictionary<string, Material> materialDict = null;
             Material currentMaterial = new Material();
             FileInfo fileInfo = new FileInfo(fileName);
+            bool validTexture = false;
             using (StreamReader reader = File.OpenText(fileName))
             {
                 string line;
@@ -179,15 +180,19 @@ namespace SkatePark
                             break;
                         case "f":
                             Debug.Assert(currentMaterial.id != null);
-                            triangleArray.Add(new Triangle(items[1], items[2], items[3], currentMaterial));
+                            if (validTexture)
+                            {
+                                triangleArray.Add(new Triangle(items[1], items[2], items[3], currentMaterial));
+                            }
                             break;
                         case "mtllib":
                             materialDict = parseMtlFile(fileInfo.DirectoryName + @"\" + items[1]);
                             break;
                         case "usemtl":
                             Debug.Assert(materialDict != null);
-                            bool success = materialDict.TryGetValue(items[1], out currentMaterial);
-                            Debug.Assert(success);
+                            Material tempMaterial;
+                            validTexture = materialDict.TryGetValue(items[1], out tempMaterial);
+                            if (validTexture) { currentMaterial = tempMaterial; }
                             break;
                     }
                 }
