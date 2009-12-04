@@ -104,6 +104,11 @@ namespace SkatePark
             ICubelet block = gridArray[firstCoordinate];
             block.PosX = newCoordinate % gameBoard.NumBlocks;
             block.PosY = newCoordinate / gameBoard.NumBlocks;
+
+            // Delete old location
+            gridArray[firstCoordinate] = null;
+            // Move to new location
+            gridArray[newCoordinate] = block;
         }
     }
 }

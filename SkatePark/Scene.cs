@@ -132,6 +132,38 @@ namespace SkatePark
             Gl.glTranslatef(translateX, 0, translateY);
         }
 
+        private void RenderCubelets(bool isSelection)
+        {
+            int i = 0;
+            foreach (ICubelet drawableObject in drawables)
+            {
+                if (isSelection)
+                {
+                    if (drawableObject == gameBoard)
+                        continue;
+
+                    Gl.glPushName(gameBoard.NumBlocks * gameBoard.NumBlocks + i);
+                }
+                Gl.glPushMatrix();
+                Gl.glTranslatef(drawableObject.PosX * gameBoard.BlockPixelSize, 0, -drawableObject.PosY * gameBoard.BlockPixelSize);
+
+                // Create scale.
+                float scaleFactor = gameBoard.BlockPixelSize / 10.0f;
+
+                if (drawableObject != gameBoard)
+                    Gl.glScalef(scaleFactor, scaleFactor * 1.5f, scaleFactor);
+
+                drawableObject.Draw();
+                Gl.glPopMatrix();
+
+                if (isSelection)
+                {
+                    Gl.glPopName();
+                    i++;
+                }
+            }
+        }
+
         internal void RenderScene()
         {
             if(!StopRender)
@@ -140,20 +172,9 @@ namespace SkatePark
 
             CalculateModelView();
 
-            foreach (ICubelet drawableObject in drawables)
-            {
-                Gl.glPushMatrix();
-                Gl.glTranslatef(drawableObject.PosX * gameBoard.BlockPixelSize, 0, -drawableObject.PosY * gameBoard.BlockPixelSize);
-
-                // Create scale.
-                float scaleFactor = gameBoard.BlockPixelSize / 10.0f;
-
-                if(drawableObject != gameBoard)
-                    Gl.glScalef(scaleFactor, scaleFactor * 1.5f, scaleFactor);
-
-                drawableObject.Draw();
-                Gl.glPopMatrix();
-            }
+            // Render everything
+            RenderCubelets(false);
+            
             
             // Render grids for debug
             gameBoard.DrawGrids(false);
@@ -252,6 +273,9 @@ namespace SkatePark
             ClearScene();
             gameBoard.DrawGrids(true);
 
+            if (drawCubelets)
+                RenderCubelets(true);
+
             int hits =0;
             // restore
             SetView(height,width);
@@ -272,21 +296,33 @@ namespace SkatePark
 
         private int ProcessHits(int hits, int[] buffer)
         {
-            if (hits > 2)
+            int minimumZ = Int32.MaxValue, minimumZIndex = Int32.MaxValue;
+            bool found = false;
+            for (int i = 0; i < hits;)
             {
-                // To cut down complexity, only allow user to click one grid at a time.
-                return -1;
+                if (buffer[i] > 0)
+                {
+                    // We have names.
+                    if (buffer[i + 1] < minimumZ)
+                    {
+                        minimumZ = buffer[i + 1];
+                        minimumZIndex = i;
+                    }
+
+                    i += buffer[i];
+
+                    found = true;
+                }
+                i += 3;
             }
 
-            int numHits = buffer[0];
-            if (numHits != 1)
+            // We have minimum index. Get the first hit.
+            if (found)
             {
-                // Same as above. Cutting down complexity.
-                return -1;
+                return buffer[minimumZIndex + 3];
             }
-
-            int objectName = buffer[3];
-            return objectName;
+            else
+                return -1; // No name
         }
     }
 }

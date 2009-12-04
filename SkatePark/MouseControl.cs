@@ -41,7 +41,14 @@ namespace SkatePark
 
             if (e.Button == MouseButtons.Left)
             {
-                int blockSelected = IntersectMouse(false);
+                int blockSelected = IntersectMouse(true);
+                // Take into account the grid names
+                if (blockSelected >= gameBoard.NumBlocks * gameBoard.NumBlocks)
+                    blockSelected -= gameBoard.NumBlocks * gameBoard.NumBlocks;
+                if (blockSelected > -1)
+                {
+                    OnBlockSelected(blockSelected);
+                }
             }
 
         }
@@ -50,6 +57,7 @@ namespace SkatePark
         {
             // User doesn't have mouse down anymore.
             MouseIsUp = true;
+            CurrentDragMode = DragMode.None;
         }
 
         public void onMouseMove(MouseEventArgs e)
@@ -74,11 +82,14 @@ namespace SkatePark
             else if (!MouseIsUp && e.Button == MouseButtons.Left && CurrentDragMode == DragMode.Move)
             {
                 // Do an intersect, if it intersects with a different one, move it
+                FirstMouseCoords = e.Location;
                 int otherIntersect = IntersectMouse(false);
+                
 
-                if (otherIntersect != FirstDragCoordinate)
+                if (otherIntersect > -1 && otherIntersect != FirstDragCoordinate)
                 {
                     MoveBlock(FirstDragCoordinate, otherIntersect);
+                    FirstDragCoordinate = otherIntersect;
                 }
             }
         }
