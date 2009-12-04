@@ -1,5 +1,6 @@
 ﻿using System;
 using Tao.OpenGl;
+using SkatePark.Primitives;
 
 namespace SkatePark.Drawables
 {
@@ -18,15 +19,19 @@ namespace SkatePark.Drawables
 
         public override void Draw()
         {
+            float scaleFactor = 5;
+            CubletRenderingData data = CubletWarehouse.cubletDictionary["floor"];
+            Material floorMaterial = data.triangleArray[0].material;
+            Gl.glBindTexture(Gl.GL_TEXTURE_2D, floorMaterial.GL_ID);
             Gl.glBegin(Gl.GL_QUADS);
             {
-                Gl.glColor3f(1, 0, 0);
+                Gl.glTexCoord2f(0, 0);
                 Gl.glVertex3f(0, 0, 0);
-                Gl.glColor3f(0, 1, 0);
+                Gl.glTexCoord2f(scaleFactor,0);
                 Gl.glVertex3f(BlockPixelSize * NumBlocks, 0, 0);
-                Gl.glColor3f(0, 0, 1);
+                Gl.glTexCoord2f(scaleFactor, scaleFactor); 
                 Gl.glVertex3f(BlockPixelSize * NumBlocks, 0 , -BlockPixelSize * NumBlocks);
-                Gl.glColor3f(1, 0, 1);
+                Gl.glTexCoord2f(0, scaleFactor);
                 Gl.glVertex3f(0,0, -BlockPixelSize * NumBlocks);
             }
             Gl.glEnd();

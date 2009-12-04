@@ -111,6 +111,12 @@
     <None Include="Raw Models\DAE to OBJ\Cube\cube.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Raw Models\DAE to OBJ\Floor\floor.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Raw Models\DAE to OBJ\Floor\floor.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Raw Models\DAE to OBJ\QuarterPipe\QuarterPipe.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -137,6 +143,12 @@
     <Content Include="Dependencies\Tao.OpenGl.dll" />
     <Content Include="Dependencies\Tao.Platform.Windows.dll" />
     <Content Include="Raw Models\DAE to OBJ\Cube\texture0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Raw Models\DAE to OBJ\Floor\texture0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Raw Models\DAE to OBJ\Floor\texture1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Raw Models\DAE to OBJ\QuarterPipe\texture0.jpg">
