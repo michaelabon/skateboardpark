@@ -25,9 +25,15 @@ namespace SkatePark
         private float translateY;
         public bool StopRender { get; set; }
 
-        private float[] LightAmbient = { 0.5f, 0.5f, 0.5f, 1 };
-        private float[] LightDiffuse = { 1, 1, 1, 1 };
+        private float[] LightAmbient = { 0.2f, 0.5f, 0.5f, 1 };
+        private float[] LightDiffuse = { 0.2f, 0.2f, 0.2f, 1 };
         private float[] LightPosition;
+
+        private float[] light1_ambient = { 0.2f, 0.2f, 0.2f, 1 };
+        private float[] light1_diffuse = { 1.0f, 1.0f, 1.0f, 1 };
+        private float[] light1_specular = { 1.0f, 1.0f, 1.0f, 1 };
+        private float[] light1_position = { -2.0f, 20.0f, 1.0f, 1 };
+        private float[] spot_direction = { -1.0f, -1.0f, 0 };
 
         float r;
 
@@ -80,16 +86,28 @@ namespace SkatePark
             Gl.glDepthFunc(Gl.GL_DEPTH_TEST);
             Gl.glEnable(Gl.GL_LEQUAL);
             Gl.glEnable(Gl.GL_CULL_FACE);
-            Gl.glEnable(Gl.GL_TEXTURE_2D);
+            //Gl.glEnable(Gl.GL_TEXTURE_2D);
             Gl.glTexEnvf(Gl.GL_TEXTURE_ENV, Gl.GL_TEXTURE_ENV_MODE, Gl.GL_DECAL);
             Gl.glHint(Gl.GL_PERSPECTIVE_CORRECTION_HINT, Gl.GL_NICEST);
             Gl.glHint(Gl.GL_LINE_SMOOTH_HINT, Gl.GL_NICEST);					// Set Line Antialiasing
 
-            Gl.glEnable(Gl.GL_LIGHTING);
-            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_AMBIENT, this.LightAmbient);
-            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_DIFFUSE, this.LightDiffuse);
-            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_POSITION, this.LightPosition);
+            Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_AMBIENT, this.LightAmbient);
+            Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_DIFFUSE, this.LightDiffuse);
+            Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_POSITION, this.LightPosition);
+            Gl.glEnable(Gl.GL_LIGHT0);
+
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_AMBIENT, light1_ambient);
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_DIFFUSE, light1_diffuse);
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_SPECULAR, light1_specular);
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_POSITION, light1_position);
+            Gl.glLightf(Gl.GL_LIGHT1, Gl.GL_CONSTANT_ATTENUATION, 1.5f);
+            Gl.glLightf(Gl.GL_LIGHT1, Gl.GL_LINEAR_ATTENUATION, 0.5f);
+            Gl.glLightf(Gl.GL_LIGHT1, Gl.GL_QUADRATIC_ATTENUATION, 0.2f);
+            Gl.glLightf(Gl.GL_LIGHT1, Gl.GL_SPOT_CUTOFF, 45.0f);
+            Gl.glLightfv(Gl.GL_LIGHT1, Gl.GL_SPOT_DIRECTION, spot_direction);
+            Gl.glLightf(Gl.GL_LIGHT1, Gl.GL_SPOT_EXPONENT, 2.0f);
             Gl.glEnable(Gl.GL_LIGHT1);
+            Gl.glEnable(Gl.GL_LIGHTING);
         }
 
         internal void SetView(int height, int width)
