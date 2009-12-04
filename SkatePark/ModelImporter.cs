@@ -18,12 +18,25 @@ namespace SkatePark
         public List<Vector3f> normalArray { get; set; }
         public List<Triangle> triangleArray { get; set; }
 
+        private const int GL_TEXTURE_MAX_ANISOTROPY_EXT = 0x84FE;
+        private const int GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT = 0x84FF;
+        private const string GL_ANISTROPIC_EXT_NAME = "GL_EXT_texture_filter_anisotropic";
+        private bool AFisSupported = false;
+        private float maxAFSupported = 0.0f;
+        private bool useMipMaps = false;
+
         /// <summary>
         /// Create a new ModelImporter and parse the OBJ file.
         /// </summary>
         /// <param name="relativeFilePath">The relative path to the OBJ file. For example: @"Raw Models\DAE to OBJ\Cube\cube.obj"</param> 
         public ModelImporter(string relativeFilePath)
         {
+            AFisSupported = isAnistropicFilteringEnabled();
+            if (AFisSupported)
+            {
+                useMipMaps = false;
+                maxAFSupported = getMaxSupportedAnisotropy();
+            }
             parseObjFile(relativeFilePath);
         }
 
@@ -90,19 +103,46 @@ namespace SkatePark
 
                 bitmapData = image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 
-                uint[] textureNames = new uint[1];
-                Gl.glGenTextures(1, textureNames);
-                entry.Value.GL_ID = textureNames[0];
+                uint textureName;
+                Gl.glGenTextures(1, out textureName);
+                entry.Value.GL_ID = textureName;
 
-                Gl.glBindTexture(Gl.GL_TEXTURE_2D, textureNames[0]);
+                Gl.glBindTexture(Gl.GL_TEXTURE_2D, textureName);
                 Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR);
-                Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR);
+                if (AFisSupported) // use Anisotropic Filtering is possible
+                {
+                    Gl.glTexParameterf(Gl.GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAFSupported);
+                }
+                else if (useMipMaps)  // Preparing for mipmaps?
+                {
+                    Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_NEAREST);
+                }
+                else  // If no mipmaps.
+                {
+                    Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR);
+                }
                 Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, (int)Gl.GL_RGB, image.Width, image.Height, 0, Gl.GL_BGR_EXT, Gl.GL_UNSIGNED_BYTE, bitmapData.Scan0);
+
+                if (useMipMaps)
+                {
+                    Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, 3, bitmapData.Width, bitmapData.Height, Gl.GL_RGB, Gl.GL_UNSIGNED_BYTE, bitmapData.Scan0); // ( NEW )
+                }
 
                 image.UnlockBits(bitmapData);
                 image.Dispose();
             }
+        }
 
+        private bool isAnistropicFilteringEnabled()
+        {
+            return Gl.glGetString(Gl.GL_EXTENSIONS).Equals(GL_ANISTROPIC_EXT_NAME);
+        }
+
+        private float getMaxSupportedAnisotropy()
+        {
+            float maxSupportedAnisotropyValue;
+            Gl.glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, out maxSupportedAnisotropyValue);
+            return maxSupportedAnisotropyValue;
         }
 
         /// <summary>
