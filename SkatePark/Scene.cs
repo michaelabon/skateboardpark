@@ -64,17 +64,11 @@ namespace SkatePark
             StopRender = false;
 
 
-            SelectedCommand = ToolPanelCommand.BlockDrag;
-            SelectedDragMode = DragMode.Rotate;
+            SelectedCommand = ToolPanelCommand.None;
+            SelectedDragMode = DragMode.None;
             SelectedBlockAdd = "cube";
 
             InitializeGridArray();
-
-            ICubelet test = new ICubelet("quarterpipe");
-            test.PosX = 0;
-            test.PosY = 0;
-            gridArray[0] = test;
-            drawables.Add(test);
         }
 
         internal void InitGL()

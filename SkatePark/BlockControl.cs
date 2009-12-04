@@ -3,6 +3,7 @@ namespace SkatePark
 {
     public enum ToolPanelCommand
     {
+        None,
         CameraDrag,
         BlockDrag, BlockAdd, BlockDelete
     }
@@ -14,9 +15,9 @@ namespace SkatePark
 
     public partial class Scene
     {
-        private ToolPanelCommand SelectedCommand { get; set; }
-        private DragMode SelectedDragMode { get; set; }
-        private string SelectedBlockAdd { get; set; }
+        public ToolPanelCommand SelectedCommand { get; set; }
+        public DragMode SelectedDragMode { get; set; }
+        public string SelectedBlockAdd { get; set; }
 
         private ICubelet[] gridArray;
 

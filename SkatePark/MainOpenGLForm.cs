@@ -60,8 +60,49 @@ namespace SkatePark
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
-            Invalidate();
-            Refresh();
+            this.openglControl.Invalidate();
+            this.openglControl.Refresh();
+        }
+
+        private void btnBlockMove_Click(object sender, EventArgs e)
+        {
+            scene.SelectedCommand = ToolPanelCommand.BlockDrag;
+            scene.SelectedDragMode = DragMode.Move;
+        }
+
+        private void btnBlockRotate_Click(object sender, EventArgs e)
+        {
+            scene.SelectedCommand = ToolPanelCommand.BlockDrag;
+            scene.SelectedDragMode = DragMode.Rotate;
+        }
+
+        private void btnBlockDelete_Click(object sender, EventArgs e)
+        {
+            scene.SelectedCommand = ToolPanelCommand.BlockDelete;
+        }
+
+        private void btnNewCube_Click(object sender, EventArgs e)
+        {
+            scene.SelectedCommand = ToolPanelCommand.BlockAdd;
+            scene.SelectedBlockAdd = "cube";
+        }
+
+        private void btnNewQP_Click(object sender, EventArgs e)
+        {
+            scene.SelectedCommand = ToolPanelCommand.BlockAdd;
+            scene.SelectedBlockAdd = "quarterpipe";
+        }
+
+        private void btnNewRails_Click(object sender, EventArgs e)
+        {
+            scene.SelectedCommand = ToolPanelCommand.BlockAdd;
+            scene.SelectedBlockAdd = "rails";
+        }
+
+        private void openglControl_Paint(object sender, PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            if (!scene.StopRender) scene.RenderScene();
         }
 
     }
