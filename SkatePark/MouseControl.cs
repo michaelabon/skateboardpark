@@ -57,6 +57,10 @@ namespace SkatePark
         {
             // User doesn't have mouse down anymore.
             MouseIsUp = true;
+            if (e.Button == MouseButtons.Left && CurrentDragMode == DragMode.Rotate)
+            {
+                SnapBackBlock();
+            }
             CurrentDragMode = DragMode.None;
         }
 
@@ -91,6 +95,12 @@ namespace SkatePark
                     MoveBlock(FirstDragCoordinate, otherIntersect);
                     FirstDragCoordinate = otherIntersect;
                 }
+            }
+            else if (!MouseIsUp && e.Button == MouseButtons.Left && CurrentDragMode == DragMode.Rotate)
+            {
+                // Find the difference and call RotateBlock
+                AnimateRotateBlock(e.Location.X - FirstMouseCoords.X);
+                FirstMouseCoords = e.Location;
             }
         }
     }

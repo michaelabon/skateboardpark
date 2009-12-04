@@ -59,12 +59,12 @@ namespace SkatePark
 
 
             SelectedCommand = ToolPanelCommand.BlockDrag;
-            SelectedDragMode = DragMode.Move;
+            SelectedDragMode = DragMode.Rotate;
             SelectedBlockAdd = "cube";
 
             InitializeGridArray();
 
-            ICubelet test = new ICubelet("cube");
+            ICubelet test = new ICubelet("quarterpipe");
             test.PosX = 0;
             test.PosY = 0;
             gridArray[0] = test;
@@ -151,7 +151,17 @@ namespace SkatePark
                 float scaleFactor = gameBoard.BlockPixelSize / 10.0f;
 
                 if (drawableObject != gameBoard)
+                {
+                    // Rotate
+                    Gl.glTranslatef(gameBoard.BlockPixelSize / 2.0f, 0, -gameBoard.BlockPixelSize / 2.0f);
+                    
+                    Gl.glRotatef(drawableObject.Orientation, 0, 1, 0);
+                    Gl.glTranslatef(-gameBoard.BlockPixelSize / 2.0f, 0, gameBoard.BlockPixelSize / 2.0f);
+                    
+
+
                     Gl.glScalef(scaleFactor, scaleFactor * 1.5f, scaleFactor);
+                }
 
                 drawableObject.Draw();
                 Gl.glPopMatrix();

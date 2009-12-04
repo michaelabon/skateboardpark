@@ -48,7 +48,7 @@ namespace SkatePark
                         }
                         else if (SelectedDragMode == DragMode.Rotate)
                         {
-
+                            CurrentDragMode = DragMode.Rotate;
                         }
                     }
                     break;
@@ -109,6 +109,45 @@ namespace SkatePark
             gridArray[firstCoordinate] = null;
             // Move to new location
             gridArray[newCoordinate] = block;
+        }
+
+        private void AnimateRotateBlock(int dX)
+        {
+            // Rotate it!
+            ICubelet block = gridArray[FirstDragCoordinate];
+            block.Orientation += dX;
+        }
+
+        private void SnapBackBlock()
+        {
+            ICubelet block = gridArray[FirstDragCoordinate];
+
+            
+            block.Orientation %= 360;
+            if (block.Orientation < 0)
+            {
+                block.Orientation += 360;
+            }
+
+            
+            for( int angle = 0; angle < 360; angle += 90)
+            {
+                if( block.Orientation >= angle && block.Orientation < angle + 90 )
+                {
+                    // Find out which is closer.
+                    int first = Math.Abs(angle - block.Orientation);
+                    int second = Math.Abs(angle + 90 - block.Orientation);
+
+                    if (first <= second)
+                    {
+                        block.Orientation = angle;
+                    }
+                    else
+                    {
+                        block.Orientation = angle + 90;
+                    }
+                }
+            }
         }
     }
 }
