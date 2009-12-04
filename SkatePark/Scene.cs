@@ -73,15 +73,15 @@ namespace SkatePark
 
         internal void InitGL()
         {
+            
             Gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
             Gl.glClearDepth(1.0f);
             Gl.glShadeModel(Gl.GL_SMOOTH);
-            Gl.glEnable(Gl.GL_DEPTH_TEST);
+            Gl.glDepthFunc(Gl.GL_DEPTH_TEST);
             Gl.glEnable(Gl.GL_LEQUAL);
             Gl.glEnable(Gl.GL_CULL_FACE);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
             Gl.glTexEnvf(Gl.GL_TEXTURE_ENV, Gl.GL_TEXTURE_ENV_MODE, Gl.GL_DECAL);
-
             Gl.glHint(Gl.GL_PERSPECTIVE_CORRECTION_HINT, Gl.GL_NICEST);
             Gl.glHint(Gl.GL_LINE_SMOOTH_HINT, Gl.GL_NICEST);					// Set Line Antialiasing
 
@@ -254,7 +254,6 @@ namespace SkatePark
 
             int hits =0;
             // restore
-
             SetView(height,width);
 
             Gl.glPopMatrix();
