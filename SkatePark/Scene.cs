@@ -6,6 +6,7 @@ using Tao.OpenGl;
 using SkatePark.Drawables;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 namespace SkatePark
 {
@@ -218,8 +219,6 @@ namespace SkatePark
             {
                 Console.WriteLine("An error has occurred: " + error.ToString());
             }
-
-           // StopRender = true;
         }
 
         private void ClearScene()
@@ -346,6 +345,105 @@ namespace SkatePark
             }
             else
                 return -1; // No name
+        }
+
+        public void SaveScene()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Text file (*.txt)|*.txt|All files (*.*)|*.*";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string filepath = dialog.FileName;
+
+                WriteSceneToBuffer(new FileStream(filepath, FileMode.Create));
+            }
+        }
+
+        public void LoadScene()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Text file (*.txt)|*.txt|All files (*.*)|*.*";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string filepath = dialog.FileName;
+
+                LoadSceneFromBuffer(new FileStream(filepath, FileMode.Open, FileAccess.Read));
+            }
+        }
+
+        private void WriteSceneToBuffer(Stream buff)
+        {
+            BinaryWriter write = new BinaryWriter(buff);
+
+            foreach (ICubelet cube in drawables)
+            {
+                if (cube == gameBoard)
+                    continue;
+                // Write name
+                write.Write(cube.MyType);
+
+                write.Write((byte)0);
+
+                // Write PosX.
+                write.Write(cube.PosX);
+                write.Write((byte)0);
+
+                // Write PosY
+                write.Write(cube.PosY);
+                write.Write((byte)0);
+
+                // Write orientation
+                write.Write(cube.Orientation);
+                write.Write((byte)0);
+            }
+
+            write.Close();
+        }
+
+        private void LoadSceneFromBuffer(Stream buff)
+        {
+
+            BinaryReader read = new BinaryReader(buff);
+
+            // Clear the current models.
+            if (MessageBox.Show("Warning: Loading a new scene will delete all changes made to the current scene. Are you sure?", "Are you Sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                buff.Close();
+                return;
+            }
+
+            drawables.Clear();
+            drawables.Add(gameBoard);
+            InitializeGridArray();
+
+            while (read.PeekChar() > 0)
+            {
+                string type = read.ReadString();
+                ICubelet cube = new ICubelet(type);
+
+                read.ReadByte();
+
+                cube.PosX = read.ReadInt32();
+                read.ReadByte();
+
+                cube.PosY = read.ReadInt32();
+
+                read.ReadByte();
+
+                cube.Orientation = read.ReadInt32();
+
+                read.ReadByte();
+
+
+                // Add to drawables
+                drawables.Add(cube);
+                // Add to array
+                gridArray[cube.PosX + gameBoard.NumBlocks * cube.PosY] = cube;
+            }
+
+            buff.Close();
         }
     }
 }

@@ -105,5 +105,15 @@ namespace SkatePark
             if (!scene.StopRender) scene.RenderScene();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            scene.SaveScene();
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            scene.LoadScene();
+        }
+
     }
 }

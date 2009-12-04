@@ -10,11 +10,11 @@ namespace SkatePark
 {
     public class ICubelet : IDrawable
     {
-        protected string myType;
+        public string MyType { get; set; }
 
         public ICubelet(string myType)
         {
-            this.myType = myType;
+            this.MyType = myType;
         }
 
         public ICubelet()
@@ -37,7 +37,7 @@ namespace SkatePark
 
         public virtual void Draw()
         {
-            CubletRenderingData data = CubletWarehouse.cubletDictionary[myType];
+            CubletRenderingData data = CubletWarehouse.cubletDictionary[MyType];
             Vector3f normalVector1, normalVector2, normalVector3, vertex1, vertex2, vertex3;
             Vector2f texel1, texel2, texel3;
             Gl.glColor3f(1, 1, 1);

@@ -42,9 +42,13 @@
             this.btnNewQP = new System.Windows.Forms.Button();
             this.btnNewIncurve = new System.Windows.Forms.Button();
             this.btnNewRails = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // openglControl
@@ -78,6 +82,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
@@ -190,6 +195,37 @@
             this.btnNewRails.UseVisualStyleBackColor = true;
             this.btnNewRails.Click += new System.EventHandler(this.btnNewRails_Click);
             // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(7, 19);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(62, 45);
+            this.btnExport.TabIndex = 7;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(75, 19);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(62, 45);
+            this.btnImport.TabIndex = 8;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btnImport);
+            this.groupBox4.Controls.Add(this.btnExport);
+            this.groupBox4.Location = new System.Drawing.Point(4, 422);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(216, 76);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Scene";
+            // 
             // MainOpenGLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,6 +238,7 @@
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -221,6 +258,9 @@
         private System.Windows.Forms.Button btnBlockRotate;
         private System.Windows.Forms.Button btnBlockDelete;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }
 
