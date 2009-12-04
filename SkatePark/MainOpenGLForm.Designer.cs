@@ -32,22 +32,22 @@
             this.openglControl = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnBlockDelete = new System.Windows.Forms.Button();
-            this.btnBlockRotate = new System.Windows.Forms.Button();
-            this.btnBlockMove = new System.Windows.Forms.Button();
-            this.btnNewCube = new System.Windows.Forms.Button();
-            this.btnNewQP = new System.Windows.Forms.Button();
-            this.btnNewIncurve = new System.Windows.Forms.Button();
             this.btnNewRails = new System.Windows.Forms.Button();
+            this.btnNewIncurve = new System.Windows.Forms.Button();
+            this.btnNewQP = new System.Windows.Forms.Button();
+            this.btnNewCube = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnBlockMove = new System.Windows.Forms.Button();
+            this.btnBlockRotate = new System.Windows.Forms.Button();
+            this.btnBlockDelete = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,27 +92,6 @@
             this.panel1.Size = new System.Drawing.Size(228, 511);
             this.panel1.TabIndex = 1;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(4, 4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(217, 129);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Camera";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.btnBlockMove);
-            this.groupBox2.Controls.Add(this.btnBlockRotate);
-            this.groupBox2.Controls.Add(this.btnBlockDelete);
-            this.groupBox2.Location = new System.Drawing.Point(3, 139);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(217, 138);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Block Manipulation";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.btnNewRails);
@@ -126,45 +105,25 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Block Creation";
             // 
-            // btnBlockDelete
+            // btnNewRails
             // 
-            this.btnBlockDelete.Location = new System.Drawing.Point(144, 19);
-            this.btnBlockDelete.Name = "btnBlockDelete";
-            this.btnBlockDelete.Size = new System.Drawing.Size(62, 45);
-            this.btnBlockDelete.TabIndex = 0;
-            this.btnBlockDelete.Text = "Delete";
-            this.btnBlockDelete.UseVisualStyleBackColor = true;
-            this.btnBlockDelete.Click += new System.EventHandler(this.btnBlockDelete_Click);
+            this.btnNewRails.Location = new System.Drawing.Point(7, 70);
+            this.btnNewRails.Name = "btnNewRails";
+            this.btnNewRails.Size = new System.Drawing.Size(62, 45);
+            this.btnNewRails.TabIndex = 6;
+            this.btnNewRails.Text = "Rails";
+            this.btnNewRails.UseVisualStyleBackColor = true;
+            this.btnNewRails.Click += new System.EventHandler(this.btnNewRails_Click);
             // 
-            // btnBlockRotate
+            // btnNewIncurve
             // 
-            this.btnBlockRotate.Location = new System.Drawing.Point(76, 19);
-            this.btnBlockRotate.Name = "btnBlockRotate";
-            this.btnBlockRotate.Size = new System.Drawing.Size(62, 45);
-            this.btnBlockRotate.TabIndex = 1;
-            this.btnBlockRotate.Text = "Rotate";
-            this.btnBlockRotate.UseVisualStyleBackColor = true;
-            this.btnBlockRotate.Click += new System.EventHandler(this.btnBlockRotate_Click);
-            // 
-            // btnBlockMove
-            // 
-            this.btnBlockMove.Location = new System.Drawing.Point(8, 19);
-            this.btnBlockMove.Name = "btnBlockMove";
-            this.btnBlockMove.Size = new System.Drawing.Size(62, 45);
-            this.btnBlockMove.TabIndex = 2;
-            this.btnBlockMove.Text = "Move";
-            this.btnBlockMove.UseVisualStyleBackColor = true;
-            this.btnBlockMove.Click += new System.EventHandler(this.btnBlockMove_Click);
-            // 
-            // btnNewCube
-            // 
-            this.btnNewCube.Location = new System.Drawing.Point(7, 19);
-            this.btnNewCube.Name = "btnNewCube";
-            this.btnNewCube.Size = new System.Drawing.Size(62, 45);
-            this.btnNewCube.TabIndex = 3;
-            this.btnNewCube.Text = "Cube";
-            this.btnNewCube.UseVisualStyleBackColor = true;
-            this.btnNewCube.Click += new System.EventHandler(this.btnNewCube_Click);
+            this.btnNewIncurve.Location = new System.Drawing.Point(143, 19);
+            this.btnNewIncurve.Name = "btnNewIncurve";
+            this.btnNewIncurve.Size = new System.Drawing.Size(62, 45);
+            this.btnNewIncurve.TabIndex = 5;
+            this.btnNewIncurve.Text = "Incurve";
+            this.btnNewIncurve.UseVisualStyleBackColor = true;
+            this.btnNewIncurve.Click += new System.EventHandler(this.btnNewQPIn_Click);
             // 
             // btnNewQP
             // 
@@ -176,24 +135,66 @@
             this.btnNewQP.UseVisualStyleBackColor = true;
             this.btnNewQP.Click += new System.EventHandler(this.btnNewQP_Click);
             // 
-            // btnNewIncurve
+            // btnNewCube
             // 
-            this.btnNewIncurve.Location = new System.Drawing.Point(143, 19);
-            this.btnNewIncurve.Name = "btnNewIncurve";
-            this.btnNewIncurve.Size = new System.Drawing.Size(62, 45);
-            this.btnNewIncurve.TabIndex = 5;
-            this.btnNewIncurve.Text = "Incurve";
-            this.btnNewIncurve.UseVisualStyleBackColor = true;
+            this.btnNewCube.Location = new System.Drawing.Point(7, 19);
+            this.btnNewCube.Name = "btnNewCube";
+            this.btnNewCube.Size = new System.Drawing.Size(62, 45);
+            this.btnNewCube.TabIndex = 3;
+            this.btnNewCube.Text = "Cube";
+            this.btnNewCube.UseVisualStyleBackColor = true;
+            this.btnNewCube.Click += new System.EventHandler(this.btnNewCube_Click);
             // 
-            // btnNewRails
+            // groupBox2
             // 
-            this.btnNewRails.Location = new System.Drawing.Point(7, 70);
-            this.btnNewRails.Name = "btnNewRails";
-            this.btnNewRails.Size = new System.Drawing.Size(62, 45);
-            this.btnNewRails.TabIndex = 6;
-            this.btnNewRails.Text = "Rails";
-            this.btnNewRails.UseVisualStyleBackColor = true;
-            this.btnNewRails.Click += new System.EventHandler(this.btnNewRails_Click);
+            this.groupBox2.Controls.Add(this.btnBlockMove);
+            this.groupBox2.Controls.Add(this.btnBlockRotate);
+            this.groupBox2.Controls.Add(this.btnBlockDelete);
+            this.groupBox2.Location = new System.Drawing.Point(3, 139);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(217, 138);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Block Manipulation";
+            // 
+            // btnBlockMove
+            // 
+            this.btnBlockMove.Location = new System.Drawing.Point(8, 19);
+            this.btnBlockMove.Name = "btnBlockMove";
+            this.btnBlockMove.Size = new System.Drawing.Size(62, 45);
+            this.btnBlockMove.TabIndex = 2;
+            this.btnBlockMove.Text = "Move";
+            this.btnBlockMove.UseVisualStyleBackColor = true;
+            this.btnBlockMove.Click += new System.EventHandler(this.btnBlockMove_Click);
+            // 
+            // btnBlockRotate
+            // 
+            this.btnBlockRotate.Location = new System.Drawing.Point(76, 19);
+            this.btnBlockRotate.Name = "btnBlockRotate";
+            this.btnBlockRotate.Size = new System.Drawing.Size(62, 45);
+            this.btnBlockRotate.TabIndex = 1;
+            this.btnBlockRotate.Text = "Rotate";
+            this.btnBlockRotate.UseVisualStyleBackColor = true;
+            this.btnBlockRotate.Click += new System.EventHandler(this.btnBlockRotate_Click);
+            // 
+            // btnBlockDelete
+            // 
+            this.btnBlockDelete.Location = new System.Drawing.Point(144, 19);
+            this.btnBlockDelete.Name = "btnBlockDelete";
+            this.btnBlockDelete.Size = new System.Drawing.Size(62, 45);
+            this.btnBlockDelete.TabIndex = 0;
+            this.btnBlockDelete.Text = "Delete";
+            this.btnBlockDelete.UseVisualStyleBackColor = true;
+            this.btnBlockDelete.Click += new System.EventHandler(this.btnBlockDelete_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(4, 4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(217, 129);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Camera";
             // 
             // btnExport
             // 
@@ -236,8 +237,8 @@
             this.Name = "MainOpenGLForm";
             this.Text = "Skate Park Alpha";
             this.panel1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -263,4 +264,5 @@
         private System.Windows.Forms.GroupBox groupBox4;
     }
 }
+
 

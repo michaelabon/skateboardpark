@@ -117,6 +117,12 @@
     <None Include="Raw Models\DAE to OBJ\Floor\floor.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Raw Models\DAE to OBJ\QuarterPipeInCurve\quarterpipeincurve.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Raw Models\DAE to OBJ\QuarterPipeInCurve\quarterpipeincurve.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Raw Models\DAE to OBJ\QuarterPipe\QuarterPipe.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -151,6 +157,12 @@
     <Content Include="Raw Models\DAE to OBJ\Floor\texture1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Raw Models\DAE to OBJ\QuarterPipeInCurve\texture0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Raw Models\DAE to OBJ\QuarterPipeInCurve\texture2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Raw Models\DAE to OBJ\QuarterPipe\texture0.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -158,6 +170,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Raw Models\DAE to OBJ\Rails\texture0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Raw Models\DAE to OBJ\Rails\texture2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

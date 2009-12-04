@@ -93,6 +93,12 @@ namespace SkatePark
             scene.SelectedBlockAdd = "quarterpipe";
         }
 
+        private void btnNewQPIn_Click(object sender, EventArgs e)
+        {
+            scene.SelectedCommand = ToolPanelCommand.BlockAdd;
+            scene.SelectedBlockAdd = "quarterpipeincurve";
+        }
+
         private void btnNewRails_Click(object sender, EventArgs e)
         {
             scene.SelectedCommand = ToolPanelCommand.BlockAdd;
