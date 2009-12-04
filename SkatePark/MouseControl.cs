@@ -4,6 +4,7 @@ namespace SkatePark
 {
     public partial class Scene
     {
+
         /// <summary>
         /// Used to know if the user has the mouse down or not.
         /// </summary>
@@ -12,8 +13,13 @@ namespace SkatePark
         /// <summary>
         /// Determines what to do when user drags mouse.
         /// </summary>
-        private bool CameraMoveMode { get; set; }
+        private DragMode CurrentDragMode { get; set; }
         private MouseButtons PressedMouseButton { get; set; }
+
+        /// <summary>
+        /// When the user grags something, this determines where the object originally was
+        /// </summary>
+        private int FirstDragCoordinate { get; set; }
 
 
         public void onMouseWheel(MouseEventArgs e)
@@ -33,20 +39,9 @@ namespace SkatePark
             FirstMouseCoords = e.Location;
             PressedMouseButton = e.Button;
 
-            if (e.Button == MouseButtons.Middle)
+            if (e.Button == MouseButtons.Left)
             {
-                CameraMoveMode = true;
-                return;
-            }
-
-            if (IntersectMouseClick())
-            {
-                // User clicked on a block
-                CameraMoveMode = false;
-            }
-            else
-            {
-                CameraMoveMode = true;
+                int blockSelected = IntersectMouse(false);
             }
 
         }
@@ -55,9 +50,6 @@ namespace SkatePark
         {
             // User doesn't have mouse down anymore.
             MouseIsUp = true;
-            CameraMoveMode = false;
-
-
         }
 
         public void onMouseMove(MouseEventArgs e)
@@ -66,7 +58,7 @@ namespace SkatePark
              * Note: This is a camera movement. NOT an object movement.
              */
             // Did the user have the mouse down?
-            if (!MouseIsUp && CameraMoveMode)
+            if (!MouseIsUp && e.Button == MouseButtons.Middle)
             {
                 // We have a drag!
                 Point newCoords = e.Location;
@@ -78,8 +70,16 @@ namespace SkatePark
                 FirstMouseCoords = e.Location;
 
                 UpdateCameraLocationFromDrag(dCoords);
+            }
+            else if (!MouseIsUp && e.Button == MouseButtons.Left && CurrentDragMode == DragMode.Move)
+            {
+                // Do an intersect, if it intersects with a different one, move it
+                int otherIntersect = IntersectMouse(false);
 
-
+                if (otherIntersect != FirstDragCoordinate)
+                {
+                    MoveBlock(FirstDragCoordinate, otherIntersect);
+                }
             }
         }
     }

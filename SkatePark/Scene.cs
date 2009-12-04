@@ -27,7 +27,7 @@ namespace SkatePark
 
         private float[] LightAmbient = { 0.5f, 0.5f, 0.5f, 1 };
         private float[] LightDiffuse = { 1, 1, 1, 1 };
-        private float[] LightPosition = { 30, 30, 30, 1 };
+        private float[] LightPosition;
 
         float r;
 
@@ -38,10 +38,11 @@ namespace SkatePark
         {
             drawables = new List<ICubelet>();
             gameBoard = new GameBoard(50, 10);
+            LightPosition = new float[] {0.5f * gameBoard.BlockPixelSize * gameBoard.NumBlocks, 0.5f * gameBoard.BlockPixelSize * gameBoard.NumBlocks, 0.5f * gameBoard.BlockPixelSize * gameBoard.NumBlocks, 1};
             drawables.Add(gameBoard);
 
             MouseIsUp = true;
-            CameraMoveMode = false;
+            CurrentDragMode = DragMode.None;
 
             heading = 0;
             pitch = 30;
@@ -56,10 +57,18 @@ namespace SkatePark
             translateY = 0;
             StopRender = false;
 
-            SelectedCommand = ToolPanelCommand.BlockAdd;
+
+            SelectedCommand = ToolPanelCommand.BlockDrag;
+            SelectedDragMode = DragMode.Move;
             SelectedBlockAdd = "cube";
 
             InitializeGridArray();
+
+            ICubelet test = new ICubelet("cube");
+            test.PosX = 0;
+            test.PosY = 0;
+            gridArray[0] = test;
+            drawables.Add(test);
         }
 
         internal void InitGL()
@@ -139,7 +148,8 @@ namespace SkatePark
                 // Create scale.
                 float scaleFactor = gameBoard.BlockPixelSize / 10.0f;
 
-                Gl.glScalef(scaleFactor, scaleFactor * 1.5f, scaleFactor);
+                if(drawableObject != gameBoard)
+                    Gl.glScalef(scaleFactor, scaleFactor * 1.5f, scaleFactor);
 
                 drawableObject.Draw();
                 Gl.glPopMatrix();
@@ -215,12 +225,11 @@ namespace SkatePark
         /// Finds out whether the user clicked anything on the screen.
         /// Returns true if the user clicked on a grid, false otherwise.
         /// </summary>
-        private bool IntersectMouseClick()
+        private int IntersectMouse(bool drawCubelets)
         {
 
             // Draw all fake grids.
             // Each grid is maxBlockUnits*maxBlockUnit
-
             int[] buffer = new int[512];
             int[] viewport = new int[4];
 
@@ -252,33 +261,33 @@ namespace SkatePark
             Gl.glFlush();
 
             hits = Gl.glRenderMode(Gl.GL_RENDER);
+            
 
             if (hits > 0)
             {
-                ProcessHits(hits, buffer);
-                return true;
+                return ProcessHits(hits, buffer);
             }
             else
-                return false;
+                return -1;
         }
 
-        private void ProcessHits(int hits, int[] buffer)
+        private int ProcessHits(int hits, int[] buffer)
         {
             if (hits > 2)
             {
                 // To cut down complexity, only allow user to click one grid at a time.
-                return;
+                return -1;
             }
 
             int numHits = buffer[0];
             if (numHits != 1)
             {
                 // Same as above. Cutting down complexity.
-                return;
+                return -1;
             }
 
             int objectName = buffer[3];
-            OnBlockSelected(objectName);
+            return objectName;
         }
     }
 }

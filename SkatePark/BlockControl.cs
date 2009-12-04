@@ -3,13 +3,19 @@ namespace SkatePark
 {
     public enum ToolPanelCommand
     {
-        CameraPan, CameraMove, CameraRotate, CameraZoom,
-        BlockDelete, BlockRotate, BlockAdd
+        CameraDrag,
+        BlockDrag, BlockAdd, BlockDelete
+    }
+
+    public enum DragMode
+    {
+        None, Move, Rotate, Zoom
     }
 
     public partial class Scene
     {
         private ToolPanelCommand SelectedCommand { get; set; }
+        private DragMode SelectedDragMode { get; set; }
         private string SelectedBlockAdd { get; set; }
 
         private ICubelet[] gridArray;
@@ -21,18 +27,30 @@ namespace SkatePark
 
         private void OnBlockSelected(int blockNum)
         {
+            
             switch (SelectedCommand)
             {
-                case ToolPanelCommand.CameraPan:
-                case ToolPanelCommand.CameraMove:
-                case ToolPanelCommand.CameraRotate:
-                case ToolPanelCommand.CameraZoom:
+                case ToolPanelCommand.CameraDrag:
                     // Do nothing
                     break;
                 case ToolPanelCommand.BlockDelete:
                     DeleteBlock(blockNum);
                     break;
-                case ToolPanelCommand.BlockRotate:
+                case ToolPanelCommand.BlockDrag:
+                    if (IsBlockExists(blockNum) != null)
+                    {
+                        // First, tell everything that the user clicked here.
+                        FirstDragCoordinate = blockNum;
+
+                        if (SelectedDragMode == DragMode.Move)
+                        {
+                            CurrentDragMode = DragMode.Move;
+                        }
+                        else if (SelectedDragMode == DragMode.Rotate)
+                        {
+
+                        }
+                    }
                     break;
                 case ToolPanelCommand.BlockAdd:
                     BlockAdd(blockNum);
@@ -72,6 +90,20 @@ namespace SkatePark
                 gridArray[blockNum] = null;
                 drawables.Remove(block);
             }
+        }
+
+        private void MoveBlock(int firstCoordinate, int newCoordinate)
+        {
+            // Make sure the new block isn't full
+            if (IsBlockExists(newCoordinate) != null)
+            {
+                return;
+            }
+
+            // Move it!
+            ICubelet block = gridArray[firstCoordinate];
+            block.PosX = newCoordinate % gameBoard.NumBlocks;
+            block.PosY = newCoordinate / gameBoard.NumBlocks;
         }
     }
 }
