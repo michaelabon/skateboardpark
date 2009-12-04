@@ -55,11 +55,10 @@ namespace SkatePark
             translateY = 0;
             StopRender = false;
 
-            Cube testCube = new Cube();
-            testCube.PosX = 5;
-            testCube.PosY = 0;
+            SelectedCommand = ToolPanelCommand.BlockAdd;
+            SelectedBlockAdd = "cube";
 
-            drawables.Add(testCube);
+            InitializeGridArray();
         }
 
         internal void InitGL()

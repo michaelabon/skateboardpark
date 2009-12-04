@@ -8,9 +8,19 @@ using Tao.OpenGl;
 
 namespace SkatePark
 {
-    public abstract class ICubelet : IDrawable
+    public class ICubelet : IDrawable
     {
         protected string myType;
+
+        public ICubelet(string myType)
+        {
+            this.myType = myType;
+        }
+
+        public ICubelet()
+        {
+
+        }
 
         public int PosX
         {
