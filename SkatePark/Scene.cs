@@ -133,6 +133,11 @@ namespace SkatePark
                 Gl.glPushMatrix();
                 Gl.glTranslatef(drawableObject.PosX * gameBoard.BlockPixelSize, 0, -drawableObject.PosY * gameBoard.BlockPixelSize);
 
+                // Create scale.
+                float scaleFactor = gameBoard.BlockPixelSize / 10.0f;
+
+                Gl.glScalef(scaleFactor, scaleFactor * 1.5f, scaleFactor);
+
                 drawableObject.Draw();
                 Gl.glPopMatrix();
             }
