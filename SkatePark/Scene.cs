@@ -190,12 +190,43 @@ namespace SkatePark
             }
         }
 
+        internal void RenderBackground()
+        {
+            Gl.glDisable(Gl.GL_DEPTH_TEST);
+            Gl.glMatrixMode(Gl.GL_PROJECTION);
+            Gl.glPushMatrix();
+            Gl.glLoadIdentity();
+
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+            Gl.glLoadIdentity();
+            Gl.glDisable(Gl.GL_LIGHTING);
+            Gl.glDisable(Gl.GL_TEXTURE_2D);
+            Gl.glBegin(Gl.GL_QUADS);
+            //red color
+            Gl.glColor3f(216f/255f, 239f/255f, 254f/255f);
+            Gl.glVertex2f(-1.0f, -1.0f);
+            Gl.glVertex2f(1.0f, -1.0f);
+            //blue color
+            Gl.glColor3f(114f/255f, 199f/255f, 251f/255f);
+            Gl.glVertex2f(1.0f, 1.0f);
+            Gl.glVertex2f(-1.0f, 1.0f);
+            Gl.glEnd();
+            Gl.glEnable(Gl.GL_TEXTURE_2D);
+            Gl.glEnable(Gl.GL_LIGHTING);
+
+            Gl.glMatrixMode(Gl.GL_PROJECTION);
+            Gl.glPopMatrix();
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+            Gl.glEnable(Gl.GL_DEPTH_TEST);
+        }
+
         internal void RenderScene()
         {
             if (!StopRender)
             { ClearScene(); }
             Gl.glPushMatrix();
 
+            RenderBackground();
             CalculateModelView();
 
             // Render everything
