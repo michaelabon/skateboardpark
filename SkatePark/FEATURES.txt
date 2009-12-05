@@ -1,0 +1,32 @@
+# GROUP #
+* Mike Kenyon: 97019079
+* Ramy El Garawany: 45013075
+
+# WHAT OUR MODELER DOES #
+We built a 3D skateboard park editor, like in the Tony Hawk Pro Skater 
+series of games. Just like in Tony Hawk, you can add blocks, move them 
+around, and rotate them to your heart's content!
+
+# FEATURES #
+
+## Requirements ##
+* Fully 3D
+* Mouse interaction: Dynamically place, rotate, move and delete objects.
+* Viewport interaction: full control over camera rotation, pan and zoom.
+* Dynamic model importing: easy additions of new objects
+* Save and load the scene to file
+
+## Extra stuff ##
+* Textures!
+* Lighting!
+* Gradient background!
+* Collisions between models handled!
+* Software-based anti-aliasing!
+* Hardware-based anisotropic filtering!
+
+# SCREENSHOTS #
+Located in folder named: Screenshots
+
+# CREDITS #
+Tao Framework: Providing us with a C# wrapper for OpenGL
+NeHe Tutorials: Getting us up off the ground.
