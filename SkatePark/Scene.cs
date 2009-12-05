@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Tao.OpenGl;
-using SkatePark.Drawables;
-using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
+using SkatePark.Drawables;
+using Tao.OpenGl;
 
 namespace SkatePark
 {
@@ -75,7 +73,7 @@ namespace SkatePark
         internal void InitGL()
         {
             
-            Gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+            Gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             Gl.glClearDepth(1.0f);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             //Gl.glDepthFunc(Gl.GL_DEPTH_TEST);
@@ -86,6 +84,10 @@ namespace SkatePark
             Gl.glTexEnvf(Gl.GL_TEXTURE_ENV, Gl.GL_TEXTURE_ENV_MODE, Gl.GL_DECAL);
             Gl.glHint(Gl.GL_PERSPECTIVE_CORRECTION_HINT, Gl.GL_NICEST);
             Gl.glHint(Gl.GL_LINE_SMOOTH_HINT, Gl.GL_NICEST);					// Set Line Antialiasing
+            Gl.glEnable(Gl.GL_BLEND);							// Enable Blending
+            Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
+            Gl.glEnable(Gl.GL_POLYGON_SMOOTH);
+            Gl.glHint(Gl.GL_POLYGON_SMOOTH_HINT, Gl.GL_NICEST);
 
             Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_AMBIENT, this.LightAmbient);
             Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_DIFFUSE, this.LightDiffuse);
@@ -201,18 +203,18 @@ namespace SkatePark
             
             
             // Render grids for debug
-            Gl.glColor3f(1, 1, 1);
-            Gl.glDisable(Gl.GL_TEXTURE_2D);
-            gameBoard.DrawGrids(false);
-            Gl.glEnable(Gl.GL_TEXTURE_2D);
+            //Gl.glColor3f(1, 1, 1);
+            //Gl.glDisable(Gl.GL_TEXTURE_2D);
+            //gameBoard.DrawGrids(false);
+            //Gl.glEnable(Gl.GL_TEXTURE_2D);
 
             /* Render camera lines */
 
-            Gl.glColor3f(0, 0, 0);
-            Gl.glBegin(Gl.GL_LINES);
-            Gl.glVertex3f(cameraX, cameraY - 5, cameraZ);
-            Gl.glVertex3f(0, 0, 0);
-            Gl.glEnd();
+            //Gl.glColor3f(0, 0, 0);
+            //Gl.glBegin(Gl.GL_LINES);
+            //Gl.glVertex3f(cameraX, cameraY - 5, cameraZ);
+            //Gl.glVertex3f(0, 0, 0);
+            //Gl.glEnd();
 
             Gl.glPopMatrix();
             Gl.glFlush();
@@ -237,6 +239,10 @@ namespace SkatePark
                 if (Control.ModifierKeys == Keys.Shift)
                 {
                     dCoords = PanCamera(dCoords);
+                }
+                else if (Control.ModifierKeys == Keys.Alt)
+                {
+                    dCoords = ZoomCamera(dCoords);
                 }
                 else
                 {
@@ -264,6 +270,14 @@ namespace SkatePark
             heading += dHeading;
             float dPitch = (float)dCoords.Y / 10.0f;
             pitch -= dPitch;
+            return dCoords;
+        }
+
+        private Point ZoomCamera(Point dCoords)
+        {
+            float difference = dCoords.Y / 10.0f;
+            fovy -= difference;
+            SetView(this.height, this.width);
             return dCoords;
         }
 
