@@ -201,7 +201,10 @@ namespace SkatePark
             
             
             // Render grids for debug
-            //gameBoard.DrawGrids(false);
+            Gl.glColor3f(1, 1, 1);
+            Gl.glDisable(Gl.GL_TEXTURE_2D);
+            gameBoard.DrawGrids(false);
+            Gl.glEnable(Gl.GL_TEXTURE_2D);
 
             /* Render camera lines */
 

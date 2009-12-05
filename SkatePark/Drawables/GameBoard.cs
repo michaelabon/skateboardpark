@@ -10,7 +10,7 @@ namespace SkatePark.Drawables
         public int NumBlocks { get; private set; }
 
         public GameBoard(int blockPixelSize, int numBlocks)
-        {
+        { 
             this.BlockPixelSize = blockPixelSize;
             this.NumBlocks = numBlocks;
         }
@@ -27,12 +27,69 @@ namespace SkatePark.Drawables
             {
                 Gl.glTexCoord2f(0, 0);
                 Gl.glVertex3f(0, 0, 0);
-                Gl.glTexCoord2f(scaleFactor,0);
+                Gl.glTexCoord2f(scaleFactor, 0);
                 Gl.glVertex3f(BlockPixelSize * NumBlocks, 0, 0);
-                Gl.glTexCoord2f(scaleFactor, scaleFactor); 
-                Gl.glVertex3f(BlockPixelSize * NumBlocks, 0 , -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(scaleFactor, scaleFactor);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, 0, -BlockPixelSize * NumBlocks);
                 Gl.glTexCoord2f(0, scaleFactor);
-                Gl.glVertex3f(0,0, -BlockPixelSize * NumBlocks);
+                Gl.glVertex3f(0, 0, -BlockPixelSize * NumBlocks);
+            }
+            // Back face.
+            {
+                Gl.glTexCoord2f(0, scaleFactor);
+                Gl.glVertex3f(0, -50, -BlockPixelSize * NumBlocks);
+
+                Gl.glTexCoord2f(scaleFactor, scaleFactor);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, -50, -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(scaleFactor, 0);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, -50, 0);
+
+                Gl.glTexCoord2f(0, 0);
+                Gl.glVertex3f(0, -50, 0);
+            }
+            scaleFactor = 2;
+            // I don't know what face this is because I don't have enough caffeine.
+            {
+                Gl.glTexCoord2f(0, 0);
+                Gl.glVertex3f(0, -50, -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(scaleFactor, 0);
+                Gl.glVertex3f(0, -50, 0);
+                Gl.glTexCoord2f(scaleFactor, scaleFactor);
+                Gl.glVertex3f(0, 0, 0);
+                Gl.glTexCoord2f(0, scaleFactor);
+                Gl.glVertex3f(0, 0, -BlockPixelSize * NumBlocks);
+            }
+            // This is the face on the front..side.. something
+            {
+                Gl.glTexCoord2f(0, 0);
+                Gl.glVertex3f(0, -50, 0);
+                Gl.glTexCoord2f(scaleFactor, 0);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, -50, 0);
+                Gl.glTexCoord2f(scaleFactor, scaleFactor);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, 0, 0);
+                Gl.glTexCoord2f(0, scaleFactor);
+                Gl.glVertex3f(0, 0, 0);
+            }
+            // Other side
+            {
+                Gl.glTexCoord2f(0, 0);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, -50, 0);
+                Gl.glTexCoord2f(scaleFactor, 0);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, -50, -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(scaleFactor, scaleFactor);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, 0, -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(0, scaleFactor);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, 0, 0);
+            }
+            {
+                Gl.glTexCoord2f(0, 0);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, -50, -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(scaleFactor, 0);
+                Gl.glVertex3f(0, -50, -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(scaleFactor, scaleFactor);
+                Gl.glVertex3f(0, 0, -BlockPixelSize * NumBlocks);
+                Gl.glTexCoord2f(0, scaleFactor);
+                Gl.glVertex3f(BlockPixelSize * NumBlocks, 0, -BlockPixelSize * NumBlocks);
             }
             Gl.glEnd();
         }
@@ -60,10 +117,10 @@ namespace SkatePark.Drawables
 
                     Gl.glBegin(Gl.GL_QUADS);
 
-                    Gl.glVertex3f(j, 2, -i);
-                    Gl.glVertex3f(j + BlockPixelSize, 2, -i);
-                    Gl.glVertex3f(j + BlockPixelSize, 2, -i - BlockPixelSize);
-                    Gl.glVertex3f(j, 2, -i - BlockPixelSize);
+                    Gl.glVertex3f(j, 1.5f, -i);
+                    Gl.glVertex3f(j + BlockPixelSize, 1.5f, -i);
+                    Gl.glVertex3f(j + BlockPixelSize, 1.5f, -i - BlockPixelSize);
+                    Gl.glVertex3f(j, 1.5f, -i - BlockPixelSize);
 
                     Gl.glEnd();
 

@@ -86,14 +86,17 @@ namespace SkatePark
             else if (!MouseIsUp && e.Button == MouseButtons.Left && CurrentDragMode == DragMode.Move)
             {
                 // Do an intersect, if it intersects with a different one, move it
+                Point saved = FirstMouseCoords;
                 FirstMouseCoords = e.Location;
                 int otherIntersect = IntersectMouse(false);
                 
 
                 if (otherIntersect > -1 && otherIntersect != FirstDragCoordinate)
                 {
-                    MoveBlock(FirstDragCoordinate, otherIntersect);
-                    FirstDragCoordinate = otherIntersect;
+                    if (MoveBlock(FirstDragCoordinate, otherIntersect))
+                        FirstDragCoordinate = otherIntersect;
+                    else
+                        FirstMouseCoords = saved;
                 }
             }
             else if (!MouseIsUp && e.Button == MouseButtons.Left && CurrentDragMode == DragMode.Rotate)

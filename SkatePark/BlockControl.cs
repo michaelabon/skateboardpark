@@ -19,6 +19,8 @@ namespace SkatePark
         public DragMode SelectedDragMode { get; set; }
         public string SelectedBlockAdd { get; set; }
 
+        private ICubelet LockedFirstDrag { get; set; }
+
         private ICubelet[] gridArray;
 
         private void InitializeGridArray()
@@ -42,6 +44,8 @@ namespace SkatePark
                     {
                         // First, tell everything that the user clicked here.
                         FirstDragCoordinate = blockNum;
+                        // Look it
+                        LockedFirstDrag = IsBlockExists(blockNum);
 
                         if (SelectedDragMode == DragMode.Move)
                         {
@@ -93,12 +97,19 @@ namespace SkatePark
             }
         }
 
-        private void MoveBlock(int firstCoordinate, int newCoordinate)
+        private bool MoveBlock(int firstCoordinate, int newCoordinate)
         {
             // Make sure the new block isn't full
             if (IsBlockExists(newCoordinate) != null)
             {
-                return;
+                return false;
+            }
+
+            // Lock
+            if (LockedFirstDrag != gridArray[firstCoordinate])
+            {
+                
+                return false;
             }
 
             // Move it!
@@ -110,6 +121,8 @@ namespace SkatePark
             gridArray[firstCoordinate] = null;
             // Move to new location
             gridArray[newCoordinate] = block;
+
+            return true;
         }
 
         private void AnimateRotateBlock(int dX)
