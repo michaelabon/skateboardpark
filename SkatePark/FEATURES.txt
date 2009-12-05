@@ -17,7 +17,7 @@ around, and rotate them to your heart's content!
 * Save and load the scene to file
 
 ## Extra stuff ##
-* Textures!
+* Photorealistic Textures!
 * Lighting!
 * Gradient background!
 * Collisions between models handled!
