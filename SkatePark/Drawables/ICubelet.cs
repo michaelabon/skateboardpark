@@ -41,12 +41,28 @@ namespace SkatePark
             Vector3f normalVector1, normalVector2, normalVector3, vertex1, vertex2, vertex3;
             Vector2f texel1, texel2, texel3;
             Gl.glColor3f(1, 1, 1);
+            float[] values = new float[4]; 
             foreach (Triangle triangle in data.triangleArray)
             {
                 try
-                {
+                {                    
                     Gl.glBindTexture(Gl.GL_TEXTURE_2D, triangle.material.GL_ID);
                     Gl.glBegin(Gl.GL_TRIANGLES);
+                    Material material = triangle.material;
+                    values[0] = material.ambient.X;
+                    values[1] = material.ambient.Y;
+                    values[2] = material.ambient.Z;
+                    values[3] = 1;
+                    Gl.glMaterialfv(Gl.GL_FRONT, Gl.GL_AMBIENT, values);
+                    values[0] = material.diffuse.X;
+                    values[1] = material.diffuse.Y;
+                    values[2] = material.diffuse.Z;
+                    Gl.glMaterialfv(Gl.GL_FRONT, Gl.GL_DIFFUSE, values);
+                    values[0] = material.specular.X;
+                    values[1] = material.specular.Y;
+                    values[2] = material.specular.Z;
+                    Gl.glMaterialfv(Gl.GL_FRONT, Gl.GL_SPECULAR, values);
+                    Gl.glMaterialf(Gl.GL_FRONT, Gl.GL_SHININESS, 0);
                     triangle.getNormals(data.normalArray, out normalVector1, out normalVector2, out normalVector3);
                     triangle.getTexels(data.texelArray, out texel1, out texel2, out texel3);
                     triangle.getVertices(data.vertexArray, out vertex1, out vertex2, out vertex3);
