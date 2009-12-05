@@ -32,6 +32,9 @@
             this.openglControl = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnNewRails = new System.Windows.Forms.Button();
             this.btnNewIncurve = new System.Windows.Forms.Button();
@@ -41,14 +44,10 @@
             this.btnBlockMove = new System.Windows.Forms.Button();
             this.btnBlockRotate = new System.Windows.Forms.Button();
             this.btnBlockDelete = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnExport = new System.Windows.Forms.Button();
-            this.btnImport = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // openglControl
@@ -85,12 +84,42 @@
             this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBox2);
-            this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(228, 511);
             this.panel1.TabIndex = 1;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btnImport);
+            this.groupBox4.Controls.Add(this.btnExport);
+            this.groupBox4.Location = new System.Drawing.Point(3, 286);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(216, 76);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Scene";
+            // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(75, 19);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(62, 45);
+            this.btnImport.TabIndex = 8;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(7, 19);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(62, 45);
+            this.btnExport.TabIndex = 7;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox3
             // 
@@ -98,7 +127,7 @@
             this.groupBox3.Controls.Add(this.btnNewIncurve);
             this.groupBox3.Controls.Add(this.btnNewQP);
             this.groupBox3.Controls.Add(this.btnNewCube);
-            this.groupBox3.Location = new System.Drawing.Point(4, 283);
+            this.groupBox3.Location = new System.Drawing.Point(4, 147);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(217, 133);
             this.groupBox3.TabIndex = 0;
@@ -150,7 +179,7 @@
             this.groupBox2.Controls.Add(this.btnBlockMove);
             this.groupBox2.Controls.Add(this.btnBlockRotate);
             this.groupBox2.Controls.Add(this.btnBlockDelete);
-            this.groupBox2.Location = new System.Drawing.Point(3, 139);
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(217, 138);
             this.groupBox2.TabIndex = 1;
@@ -187,46 +216,6 @@
             this.btnBlockDelete.UseVisualStyleBackColor = true;
             this.btnBlockDelete.Click += new System.EventHandler(this.btnBlockDelete_Click);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(4, 4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(217, 129);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Camera";
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(7, 19);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(62, 45);
-            this.btnExport.TabIndex = 7;
-            this.btnExport.Text = "Export";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnImport
-            // 
-            this.btnImport.Location = new System.Drawing.Point(75, 19);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(62, 45);
-            this.btnImport.TabIndex = 8;
-            this.btnImport.Text = "Import";
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.btnImport);
-            this.groupBox4.Controls.Add(this.btnExport);
-            this.groupBox4.Location = new System.Drawing.Point(4, 422);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(216, 76);
-            this.groupBox4.TabIndex = 9;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Scene";
-            // 
             // MainOpenGLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,9 +226,9 @@
             this.Name = "MainOpenGLForm";
             this.Text = "Skate Park Alpha";
             this.panel1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -258,7 +247,6 @@
         private System.Windows.Forms.Button btnBlockMove;
         private System.Windows.Forms.Button btnBlockRotate;
         private System.Windows.Forms.Button btnBlockDelete;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.GroupBox groupBox4;
