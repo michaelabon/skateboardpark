@@ -20,8 +20,8 @@ namespace SkatePark
         private float zNear;
 
         private float cameraX, cameraY, cameraZ;
-        private float translateX;
-        private float translateY;
+        public float translateX;
+        public float translateY;
         public bool StopRender { get; set; }
 
         private float[] LightAmbient = { 0.2f, 0.5f, 0.5f, 1 };
@@ -36,21 +36,23 @@ namespace SkatePark
 
         float r;
 
-        private float pitch;
-        private float heading;
+        public float pitch;
+        public float heading;
 
         public Scene()
         {
             drawables = new List<ICubelet>();
-            gameBoard = new GameBoard(50, 10);
+            int blockPixelSize = 50;
+            int numBlocks = 10;
+            gameBoard = new GameBoard(blockPixelSize, numBlocks);
             LightPosition = new float[] {0.5f * gameBoard.BlockPixelSize * gameBoard.NumBlocks, 0.5f * gameBoard.BlockPixelSize * gameBoard.NumBlocks, 0.5f * gameBoard.BlockPixelSize * gameBoard.NumBlocks, 1};
             drawables.Add(gameBoard);
 
             MouseIsUp = true;
             CurrentDragMode = DragMode.None;
 
-            heading = 0;
-            pitch = 30;
+            heading = 205;
+            pitch = 40;
 
             fovy = 45;
             zNear = 1;
@@ -58,8 +60,8 @@ namespace SkatePark
 
             r = 500;
 
-            translateX = 0;
-            translateY = 0;
+            translateX = -115;
+            translateY = 170;
             StopRender = false;
 
 
